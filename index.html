@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>STM32 Driver Mentor - Learn to Write Embedded Drivers</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="app-container">
+        <!-- Header -->
+        <header class="header">
+            <div class="logo">
+                <div class="logo-icon">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/>
+                    </svg>
+                </div>
+                <span class="logo-text">STM32 Driver Mentor</span>
+            </div>
+            <nav class="nav">
+                <button class="nav-btn active" data-view="home">Home</button>
+                <button class="nav-btn" data-view="progress">My Progress</button>
+                <button class="nav-btn" data-view="reference">Quick Reference</button>
+            </nav>
+        </header>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Home View - Driver Selection -->
+            <section id="home-view" class="view active">
+                <div class="hero">
+                    <h1 class="hero-title">Learn to Write STM32 Drivers</h1>
+                    <p class="hero-subtitle">Master embedded driver development with step-by-step guidance. Choose a peripheral and start your journey!</p>
+                </div>
+
+                <div class="driver-grid">
+                    <!-- GPIO Card -->
+                    <div class="driver-card" data-driver="gpio">
+                        <div class="card-icon gpio-icon">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                                <rect x="3" y="3" width="7" height="7" rx="1"/>
+                                <rect x="14" y="3" width="7" height="7" rx="1"/>
+                                <rect x="3" y="14" width="7" height="7" rx="1"/>
+                                <rect x="14" y="14" width="7" height="7" rx="1"/>
+                                <circle cx="6.5" cy="6.5" r="1.5" fill="currentColor"/>
+                                <circle cx="17.5" cy="17.5" r="1.5" fill="currentColor"/>
+                            </svg>
+                        </div>
+                        <h3 class="card-title">GPIO Driver</h3>
+                        <p class="card-desc">General Purpose Input/Output - Control pins, read buttons, drive LEDs</p>
+                        <div class="card-meta">
+                            <span class="difficulty beginner">Beginner</span>
+                            <span class="duration">~45 min</span>
+                        </div>
+                        <div class="card-progress">
+                            <div class="progress-bar"><div class="progress-fill" style="width: 0%"></div></div>
+                            <span class="progress-text">0% Complete</span>
+                        </div>
+                    </div>
+
+                    <!-- SPI Card -->
+                    <div class="driver-card" data-driver="spi">
+                        <div class="card-icon spi-icon">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                                <path d="M4 12h16"/>
+                                <path d="M4 6h16"/>
+                                <path d="M4 18h16"/>
+                                <circle cx="8" cy="6" r="2" fill="currentColor"/>
+                                <circle cx="16" cy="12" r="2" fill="currentColor"/>
+                                <circle cx="8" cy="18" r="2" fill="currentColor"/>
+                            </svg>
+                        </div>
+                        <h3 class="card-title">SPI Driver</h3>
+                        <p class="card-desc">Serial Peripheral Interface - High-speed communication with sensors & displays</p>
+                        <div class="card-meta">
+                            <span class="difficulty intermediate">Intermediate</span>
+                            <span class="duration">~60 min</span>
+                        </div>
+                        <div class="card-progress">
+                            <div class="progress-bar"><div class="progress-fill" style="width: 0%"></div></div>
+                            <span class="progress-text">0% Complete</span>
+                        </div>
+                    </div>
+
+                    <!-- I2C Card -->
+                    <div class="driver-card" data-driver="i2c">
+                        <div class="card-icon i2c-icon">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                                <path d="M12 2v6"/>
+                                <path d="M12 16v6"/>
+                                <circle cx="12" cy="12" r="4"/>
+                                <path d="M4 12h4"/>
+                                <path d="M16 12h4"/>
+                            </svg>
+                        </div>
+                        <h3 class="card-title">I2C Driver</h3>
+                        <p class="card-desc">Inter-Integrated Circuit - Two-wire communication for multiple devices</p>
+                        <div class="card-meta">
+                            <span class="difficulty intermediate">Intermediate</span>
+                            <span class="duration">~75 min</span>
+                        </div>
+                        <div class="card-progress">
+                            <div class="progress-bar"><div class="progress-fill" style="width: 0%"></div></div>
+                            <span class="progress-text">0% Complete</span>
+                        </div>
+                    </div>
+
+                    <!-- USART Card -->
+                    <div class="driver-card" data-driver="usart">
+                        <div class="card-icon usart-icon">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                                <path d="M4 4h16v16H4z"/>
+                                <path d="M8 8h8"/>
+                                <path d="M8 12h6"/>
+                                <path d="M8 16h4"/>
+                            </svg>
+                        </div>
+                        <h3 class="card-title">USART Driver</h3>
+                        <p class="card-desc">Universal Synchronous/Asynchronous Receiver-Transmitter - Serial communication</p>
+                        <div class="card-meta">
+                            <span class="difficulty advanced">Advanced</span>
+                            <span class="duration">~90 min</span>
+                        </div>
+                        <div class="card-progress">
+                            <div class="progress-bar"><div class="progress-fill" style="width: 0%"></div></div>
+                            <span class="progress-text">0% Complete</span>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Lesson View -->
+            <section id="lesson-view" class="view">
+                <div class="lesson-container">
+                    <!-- Lesson Sidebar -->
+                    <aside class="lesson-sidebar">
+                        <button class="back-btn" id="back-to-home">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M19 12H5M12 19l-7-7 7-7"/>
+                            </svg>
+                            Back to Drivers
+                        </button>
+                        <h2 class="sidebar-title" id="current-driver-title">GPIO Driver</h2>
+                        <div class="steps-list" id="steps-list">
+                            <!-- Steps will be populated dynamically -->
+                        </div>
+                    </aside>
+
+                    <!-- Lesson Content -->
+                    <div class="lesson-content">
+                        <div class="lesson-header">
+                            <div class="step-indicator">
+                                <span id="current-step-num">Step 1</span>
+                                <span class="step-separator">of</span>
+                                <span id="total-steps">10</span>
+                            </div>
+                            <h1 class="lesson-title" id="lesson-title">Understanding GPIO Basics</h1>
+                        </div>
+
+                        <div class="lesson-body" id="lesson-body">
+                            <!-- Lesson content will be populated dynamically -->
+                        </div>
+
+                        <div class="lesson-navigation">
+                            <button class="nav-button prev" id="prev-step" disabled>
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M19 12H5M12 19l-7-7 7-7"/>
+                                </svg>
+                                Previous
+                            </button>
+                            <button class="nav-button next" id="next-step">
+                                Next
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M5 12h14M12 5l7 7-7 7"/>
+                                </svg>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Progress View -->
+            <section id="progress-view" class="view">
+                <div class="progress-container">
+                    <h1 class="section-title">Your Learning Progress</h1>
+                    <div class="progress-overview">
+                        <div class="overview-card">
+                            <div class="overview-value" id="total-progress">0%</div>
+                            <div class="overview-label">Overall Progress</div>
+                        </div>
+                        <div class="overview-card">
+                            <div class="overview-value" id="completed-lessons">0</div>
+                            <div class="overview-label">Lessons Completed</div>
+                        </div>
+                        <div class="overview-card">
+                            <div class="overview-value" id="time-spent">0h</div>
+                            <div class="overview-label">Time Invested</div>
+                        </div>
+                    </div>
+                    <div class="driver-progress-list" id="driver-progress-list">
+                        <!-- Driver progress items will be populated -->
+                    </div>
+                </div>
+            </section>
+
+            <!-- Reference View -->
+            <section id="reference-view" class="view">
+                <div class="reference-container">
+                    <h1 class="section-title">Quick Reference</h1>
+                    <div class="reference-tabs">
+                        <button class="ref-tab active" data-ref="registers">Register Map</button>
+                        <button class="ref-tab" data-ref="macros">Common Macros</button>
+                        <button class="ref-tab" data-ref="patterns">Code Patterns</button>
+                    </div>
+                    <div class="reference-content" id="reference-content">
+                        <!-- Reference content will be populated -->
+                    </div>
+                </div>
+            </section>
+        </main>
+
+        <!-- Footer -->
+        <footer class="footer">
+            <p>STM32 Driver Mentor Tool - Helping students master embedded driver development</p>
+            <p class="footer-note">Based on STM32F446RE Reference Manual (RM0390)</p>
+        </footer>
+    </div>
+
+    <script src="lessons/gpio-lessons.js"></script>
+    <script src="lessons/spi-lessons.js"></script>
+    <script src="lessons/i2c-lessons.js"></script>
+    <script src="lessons/usart-lessons.js"></script>
+    <script src="app.js"></script>
+</body>
+</html>
+
