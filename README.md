@@ -145,6 +145,17 @@ This educational tool is provided for learning purposes. Feel free to use and mo
 
 - 💼 LinkedIn: [linkedin.com/in/neeraj-pm](https://www.linkedin.com/in/neeraj-pm/)
 - 📧 Email: neeraj.pm1995@gmail.com
+- ☕ Support: [Buy Me a Coffee](https://buymeacoffee.com/neerajpm)
+
+---
+
+## ☕ Support This Project
+
+If you find this tool helpful, consider buying me a coffee!
+
+<a href="https://buymeacoffee.com/neerajpm" target="_blank">
+  <img src="https://cdn.buymeacoffee.com/buttons/v2/default-yellow.png" alt="Buy Me A Coffee" height="50">
+</a>
 
 ---
 

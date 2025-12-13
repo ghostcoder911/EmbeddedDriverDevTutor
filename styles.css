@@ -970,6 +970,19 @@ body::before {
     flex-shrink: 0;
 }
 
+.footer-link.coffee-link {
+    color: #ffdd00;
+    border: 1px solid rgba(255, 221, 0, 0.3);
+    background: rgba(255, 221, 0, 0.1);
+}
+
+.footer-link.coffee-link:hover {
+    color: #ffdd00;
+    background: rgba(255, 221, 0, 0.2);
+    border-color: #ffdd00;
+    box-shadow: 0 0 15px rgba(255, 221, 0, 0.3);
+}
+
 /* ============================================
    Responsive Design
    ============================================ */
