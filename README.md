@@ -139,5 +139,14 @@ This educational tool is provided for learning purposes. Feel free to use and mo
 
 ---
 
+## 👨‍💻 Developer
+
+**Neeraj PM**
+
+- 💼 LinkedIn: [linkedin.com/in/neeraj-pm](https://www.linkedin.com/in/neeraj-pm/)
+- 📧 Email: neeraj.pm1995@gmail.com
+
+---
+
 Created for STM32 driver development education.
 
