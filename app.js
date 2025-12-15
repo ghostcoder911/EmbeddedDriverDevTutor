@@ -66,6 +66,7 @@ class DriverMentor {
         
         // Update sidebar title
         const driverNames = {
+            'c-programming': 'Embedded C Programming',
             'mcu-header': 'MCU Header File',
             gpio: 'GPIO Driver',
             spi: 'SPI Driver',
@@ -167,6 +168,7 @@ class DriverMentor {
 
     getLessons() {
         switch (this.currentDriver) {
+            case 'c-programming': return window.cProgrammingLessons || [];
             case 'mcu-header': return window.mcuHeaderLessons || [];
             case 'gpio': return window.gpioLessons || [];
             case 'spi': return window.spiLessons || [];
@@ -236,7 +238,7 @@ class DriverMentor {
     }
 
     updateProgressDisplay() {
-        const drivers = ['mcu-header', 'gpio', 'spi', 'i2c', 'usart'];
+        const drivers = ['c-programming', 'mcu-header', 'gpio', 'spi', 'i2c', 'usart'];
         
         drivers.forEach(driver => {
             const lessons = this.getDriverLessons(driver);
@@ -254,6 +256,7 @@ class DriverMentor {
 
     getDriverLessons(driver) {
         switch (driver) {
+            case 'c-programming': return window.cProgrammingLessons || [];
             case 'mcu-header': return window.mcuHeaderLessons || [];
             case 'gpio': return window.gpioLessons || [];
             case 'spi': return window.spiLessons || [];
@@ -265,6 +268,7 @@ class DriverMentor {
 
     renderProgressView() {
         const drivers = [
+            { id: 'c-programming', name: 'Embedded C Programming', icon: 'c-icon' },
             { id: 'mcu-header', name: 'MCU Header File', icon: 'mcu-icon' },
             { id: 'gpio', name: 'GPIO Driver', icon: 'gpio-icon' },
             { id: 'spi', name: 'SPI Driver', icon: 'spi-icon' },
@@ -311,6 +315,7 @@ class DriverMentor {
 
     showCompletionMessage() {
         const driverNames = {
+            'c-programming': 'Embedded C',
             'mcu-header': 'MCU Header',
             gpio: 'GPIO',
             spi: 'SPI',

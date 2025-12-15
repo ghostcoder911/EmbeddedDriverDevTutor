@@ -317,6 +317,34 @@ body::before {
     color: var(--accent-purple);
 }
 
+/* C Programming Card */
+.driver-card.prerequisite {
+    border: 2px solid var(--accent-cyan);
+    background: linear-gradient(135deg, var(--bg-card) 0%, rgba(57, 197, 207, 0.08) 100%);
+}
+
+.driver-card.prerequisite::before {
+    background: linear-gradient(90deg, var(--accent-cyan), var(--accent-blue));
+    transform: scaleX(1);
+}
+
+.driver-card.prerequisite:hover {
+    border-color: var(--accent-cyan);
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.3), 0 0 30px rgba(57, 197, 207, 0.2);
+}
+
+.prereq-badge {
+    background: var(--accent-cyan) !important;
+}
+
+.c-icon {
+    background: linear-gradient(135deg, rgba(57, 197, 207, 0.15), rgba(88, 166, 255, 0.15));
+}
+
+.c-icon svg {
+    color: var(--accent-cyan);
+}
+
 .driver-card:hover::before {
     transform: scaleX(1);
 }
@@ -384,6 +412,12 @@ body::before {
 .difficulty.foundation {
     background: rgba(163, 113, 247, 0.15);
     color: var(--accent-purple);
+    font-weight: 600;
+}
+
+.difficulty.prerequisite-level {
+    background: rgba(57, 197, 207, 0.15);
+    color: var(--accent-cyan);
     font-weight: 600;
 }
 
@@ -1094,6 +1128,7 @@ body::before {
 .driver-card:nth-child(3) { animation-delay: 0.15s; }
 .driver-card:nth-child(4) { animation-delay: 0.2s; }
 .driver-card:nth-child(5) { animation-delay: 0.25s; }
+.driver-card:nth-child(6) { animation-delay: 0.3s; }
 
 /* Custom Scrollbar */
 ::-webkit-scrollbar {
