@@ -7,6 +7,7 @@ An interactive web-based learning tool for students to learn embedded driver dev
 This tool guides students step-by-step through writing peripheral drivers for STM32F446RE microcontrollers. It covers:
 
 - **GPIO Driver** - General Purpose Input/Output (Beginner)
+- **GPIO Interrupts** - Interrupt-driven GPIO with EXTI, SYSCFG, and NVIC (Intermediate)
 - **SPI Driver** - Serial Peripheral Interface (Intermediate)
 - **I2C Driver** - Inter-Integrated Circuit (Intermediate)
 - **USART Driver** - Serial Communication (Advanced)
@@ -59,6 +60,18 @@ python -m http.server 8000
 8. Implementing GPIO Initialization
 9. Implementing Read/Write Operations
 10. Testing Your GPIO Driver
+
+#### GPIO Interrupts (10 lessons)
+1. Introduction to GPIO Interrupts
+2. Hardware Architecture Overview
+3. EXTI Registers & Configuration
+4. SYSCFG: GPIO to EXTI Mapping
+5. NVIC: Interrupt Controller
+6. Interrupt Priority Configuration
+7. Complete Configuration Process
+8. Complete Example: Button to LED
+9. Advanced Examples
+10. Common Pitfalls & Best Practices
 
 #### SPI Driver (8 lessons)
 1. Understanding SPI Protocol
@@ -113,17 +126,21 @@ python -m http.server 8000
 
 ```
 EmbeddedDriverDevTutor/
-├── index.html          # Main application
-├── guides.html         # Study guides listing page
-├── styles.css          # Styling
-├── app.js              # Application logic
+├── index.html                       # Main application
+├── guides.html                      # Study guides listing page
+├── styles.css                       # Styling
+├── app.js                           # Application logic
 ├── lessons/
-│   ├── gpio-lessons.js   # GPIO tutorial content
-│   ├── spi-lessons.js    # SPI tutorial content
-│   ├── i2c-lessons.js    # I2C tutorial content
-│   └── usart-lessons.js  # USART tutorial content
+│   ├── c-programming-lessons.js     # C programming fundamentals
+│   ├── mcu-header-lessons.js        # MCU header file structure
+│   ├── gpio-lessons.js              # GPIO tutorial content
+│   ├── gpio-interrupt-lessons.js    # GPIO interrupt configuration (NEW!)
+│   ├── spi-lessons.js               # SPI tutorial content
+│   ├── i2c-lessons.js               # I2C tutorial content
+│   └── usart-lessons.js             # USART tutorial content
 ├── guides/
 │   └── GPIO_Interrupt_Configuration_Study_Guide.md
+├── GPIO_Interrupt_Configuration_Study_Guide.md  # Reference guide (root)
 └── README.md
 ```
 

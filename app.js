@@ -69,6 +69,7 @@ class DriverMentor {
             'c-programming': 'Embedded C Programming',
             'mcu-header': 'MCU Header File',
             gpio: 'GPIO Driver',
+            'gpio-interrupt': 'GPIO Interrupts',
             spi: 'SPI Driver',
             i2c: 'I2C Driver',
             usart: 'USART Driver'
@@ -171,6 +172,7 @@ class DriverMentor {
             case 'c-programming': return window.cProgrammingLessons || [];
             case 'mcu-header': return window.mcuHeaderLessons || [];
             case 'gpio': return window.gpioLessons || [];
+            case 'gpio-interrupt': return window.gpioInterruptLessons || [];
             case 'spi': return window.spiLessons || [];
             case 'i2c': return window.i2cLessons || [];
             case 'usart': return window.usartLessons || [];
@@ -238,7 +240,7 @@ class DriverMentor {
     }
 
     updateProgressDisplay() {
-        const drivers = ['c-programming', 'mcu-header', 'gpio', 'spi', 'i2c', 'usart'];
+        const drivers = ['c-programming', 'mcu-header', 'gpio', 'gpio-interrupt', 'spi', 'i2c', 'usart'];
         
         drivers.forEach(driver => {
             const lessons = this.getDriverLessons(driver);
@@ -259,6 +261,7 @@ class DriverMentor {
             case 'c-programming': return window.cProgrammingLessons || [];
             case 'mcu-header': return window.mcuHeaderLessons || [];
             case 'gpio': return window.gpioLessons || [];
+            case 'gpio-interrupt': return window.gpioInterruptLessons || [];
             case 'spi': return window.spiLessons || [];
             case 'i2c': return window.i2cLessons || [];
             case 'usart': return window.usartLessons || [];
@@ -271,6 +274,7 @@ class DriverMentor {
             { id: 'c-programming', name: 'Embedded C Programming', icon: 'c-icon' },
             { id: 'mcu-header', name: 'MCU Header File', icon: 'mcu-icon' },
             { id: 'gpio', name: 'GPIO Driver', icon: 'gpio-icon' },
+            { id: 'gpio-interrupt', name: 'GPIO Interrupts', icon: 'gpio-icon' },
             { id: 'spi', name: 'SPI Driver', icon: 'spi-icon' },
             { id: 'i2c', name: 'I2C Driver', icon: 'i2c-icon' },
             { id: 'usart', name: 'USART Driver', icon: 'usart-icon' }
