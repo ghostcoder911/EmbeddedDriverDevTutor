@@ -89,6 +89,14 @@ python -m http.server 8000
 6. Implementing Init and Send
 7. Testing Your USART Driver
 
+### Study Guides
+- **GPIO Interrupt Configuration** - Comprehensive 1200+ line guide covering GPIO interrupts end-to-end
+  - Hardware architecture (GPIO → SYSCFG → EXTI → NVIC)
+  - Register-level programming
+  - Practical coding examples
+  - Best practices and common pitfalls
+- More guides coming soon!
+
 ### Quick Reference
 - Register maps for all peripherals
 - Common macros and definitions
@@ -104,8 +112,9 @@ python -m http.server 8000
 ## 📁 Project Structure
 
 ```
-STM32_Driver_Mentor_Tool/
+EmbeddedDriverDevTutor/
 ├── index.html          # Main application
+├── guides.html         # Study guides listing page
 ├── styles.css          # Styling
 ├── app.js              # Application logic
 ├── lessons/
@@ -113,6 +122,8 @@ STM32_Driver_Mentor_Tool/
 │   ├── spi-lessons.js    # SPI tutorial content
 │   ├── i2c-lessons.js    # I2C tutorial content
 │   └── usart-lessons.js  # USART tutorial content
+├── guides/
+│   └── GPIO_Interrupt_Configuration_Study_Guide.md
 └── README.md
 ```
 
