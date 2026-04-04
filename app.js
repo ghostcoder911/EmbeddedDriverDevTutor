@@ -73,7 +73,8 @@ class DriverMentor {
             spi: 'SPI Driver',
             i2c: 'I2C Driver',
             usart: 'USART Driver',
-            rtos: 'RTOS / FreeRTOS'
+            rtos: 'RTOS / FreeRTOS',
+            'embedded-interview': 'Embedded Interview Prep'
         };
         document.getElementById('current-driver-title').textContent = driverNames[driver];
 
@@ -178,6 +179,7 @@ class DriverMentor {
             case 'i2c': return window.i2cLessons || [];
             case 'usart': return window.usartLessons || [];
             case 'rtos': return window.rtosLessons || [];
+            case 'embedded-interview': return window.embeddedInterviewLessons || [];
             default: return [];
         }
     }
@@ -242,7 +244,7 @@ class DriverMentor {
     }
 
     updateProgressDisplay() {
-        const drivers = ['c-programming', 'mcu-header', 'gpio', 'gpio-interrupt', 'spi', 'i2c', 'usart', 'rtos'];
+        const drivers = ['c-programming', 'mcu-header', 'gpio', 'gpio-interrupt', 'spi', 'i2c', 'usart', 'rtos', 'embedded-interview'];
         
         drivers.forEach(driver => {
             const lessons = this.getDriverLessons(driver);
@@ -268,6 +270,7 @@ class DriverMentor {
             case 'i2c': return window.i2cLessons || [];
             case 'usart': return window.usartLessons || [];
             case 'rtos': return window.rtosLessons || [];
+            case 'embedded-interview': return window.embeddedInterviewLessons || [];
             default: return [];
         }
     }
@@ -281,7 +284,8 @@ class DriverMentor {
             { id: 'spi', name: 'SPI Driver', icon: 'spi-icon' },
             { id: 'i2c', name: 'I2C Driver', icon: 'i2c-icon' },
             { id: 'usart', name: 'USART Driver', icon: 'usart-icon' },
-            { id: 'rtos', name: 'RTOS / FreeRTOS', icon: 'rtos-icon' }
+            { id: 'rtos', name: 'RTOS / FreeRTOS', icon: 'rtos-icon' },
+            { id: 'embedded-interview', name: 'Embedded Interview Prep', icon: 'interview-icon' }
         ];
 
         let totalCompleted = 0;
@@ -330,7 +334,8 @@ class DriverMentor {
             spi: { display: 'SPI', style: 'driver' },
             i2c: { display: 'I2C', style: 'driver' },
             usart: { display: 'USART', style: 'driver' },
-            rtos: { display: 'RTOS / FreeRTOS', style: 'track' }
+            rtos: { display: 'RTOS / FreeRTOS', style: 'track' },
+            'embedded-interview': { display: 'Embedded Interview Prep', style: 'interview' }
         };
         const p = profiles[this.currentDriver] || { display: 'lesson', style: 'driver' };
         this.showCelebration(p);
@@ -345,6 +350,10 @@ class DriverMentor {
             subtitleHtml = `You've mastered the <span class="driver-name">${display}</span> track!`;
             badgeName = `${display} Expert`;
             message = 'You can apply scheduling, synchronization, and ISR-safe patterns in firmware. Keep the official FreeRTOS.org API reference open while coding.';
+        } else if (style === 'interview') {
+            subtitleHtml = `You've completed <span class="driver-name">${display}</span>!`;
+            badgeName = `${display} — Reviewed`;
+            message = 'You have worked through the full Q&A set. Practice explaining answers out loud and connect each topic to projects you have built.';
         } else if (style === 'topic') {
             subtitleHtml = `You've mastered <span class="driver-name">${display}</span>!`;
             badgeName = `${display} Expert`;

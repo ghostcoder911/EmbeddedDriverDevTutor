@@ -12,6 +12,7 @@ This tool guides students step-by-step through writing peripheral drivers for ST
 - **I2C Driver** - Inter-Integrated Circuit (Intermediate)
 - **USART Driver** - Serial Communication (Advanced)
 - **RTOS / FreeRTOS** - Tasks, handles, scheduling, semaphores, mutexes, queues, and more (beginner-friendly, links to [FreeRTOS.org](https://www.freertos.org/))
+- **Embedded Interview Prep** - Q&A-style embedded systems and C interview practice
 
 ## 🚀 Getting Started
 
@@ -124,6 +125,11 @@ python -m http.server 8000
 
 Lessons link to **[FreeRTOS.org](https://www.freertos.org/)** (kernel book, API index, `FreeRTOSConfig.h`).
 
+#### Embedded Interview Prep (15 steps)
+1. How to use this track  
+2–11. Embedded concepts — questions in groups of 10 (1–100)  
+12–15. C programming — practice sets (grouped Q&A)
+
 ### Study Guides
 Open **Study Guides** in the app (or the bundled Markdown references) for long-form material:
 - **GPIO Interrupt Configuration** — GPIO interrupts end-to-end (hardware chain, registers, examples, pitfalls)
@@ -158,7 +164,8 @@ EmbeddedDriverDevTutor/
 │   ├── spi-lessons.js               # SPI tutorial content
 │   ├── i2c-lessons.js               # I2C tutorial content
 │   ├── usart-lessons.js             # USART tutorial content
-│   └── rtos-lessons.js              # RTOS / FreeRTOS (STM32 + freertos.org)
+│   ├── rtos-lessons.js              # RTOS / FreeRTOS (STM32 + freertos.org)
+│   └── embedded-interview-lessons.js # Embedded interview Q&A
 ├── guides/                          # Study guide documents (linked from guides.html)
 ├── RTOS_Tutor/                      # Optional: STM32 FreeRTOS examples (separate from lessons)
 ├── GPIO_Interrupt_Configuration_Study_Guide.md  # Extra GPIO reference copy (root)
