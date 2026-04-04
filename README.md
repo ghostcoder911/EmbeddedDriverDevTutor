@@ -1,6 +1,6 @@
 # STM32 Driver Mentor Tool
 
-An interactive web-based learning tool for students to learn embedded driver development from scratch.
+An interactive web-based learning tool for **STM32 peripheral drivers** and **FreeRTOS**—step-by-step lessons and long-form study guides.
 
 ## 🎯 Purpose
 
@@ -11,6 +11,7 @@ This tool guides students step-by-step through writing peripheral drivers for ST
 - **SPI Driver** - Serial Peripheral Interface (Intermediate)
 - **I2C Driver** - Inter-Integrated Circuit (Intermediate)
 - **USART Driver** - Serial Communication (Advanced)
+- **RTOS / FreeRTOS** - Tasks, handles, scheduling, semaphores, mutexes, queues, and more (beginner-friendly, links to [FreeRTOS.org](https://www.freertos.org/))
 
 ## 🚀 Getting Started
 
@@ -102,13 +103,32 @@ python -m http.server 8000
 6. Implementing Init and Send
 7. Testing Your USART Driver
 
+#### RTOS / FreeRTOS (17 lessons)
+1. What is an RTOS?
+2. Tasks (building blocks)
+3. Task handle (`TaskHandle_t`)
+4. `xTaskCreate` — every parameter explained
+5. Static task creation (`xTaskCreateStatic`)
+6. Starting the scheduler and idle task
+7. Ticks, time, and delays
+8. Scheduling (states, preemption, priorities)
+9. Semaphores and binary semaphores
+10. Counting semaphores
+11. Mutexes (shared resources, priority inversion)
+12. Queues
+13. Software timers
+14. Interrupts and `FromISR` APIs
+15. Task notifications
+16. Heap and per-task stacks
+17. Summary and next steps
+
+Lessons link to **[FreeRTOS.org](https://www.freertos.org/)** (kernel book, API index, `FreeRTOSConfig.h`).
+
 ### Study Guides
-- **GPIO Interrupt Configuration** - Comprehensive 1200+ line guide covering GPIO interrupts end-to-end
-  - Hardware architecture (GPIO → SYSCFG → EXTI → NVIC)
-  - Register-level programming
-  - Practical coding examples
-  - Best practices and common pitfalls
-- More guides coming soon!
+Open **Study Guides** in the app (or the bundled Markdown references) for long-form material:
+- **GPIO Interrupt Configuration** — GPIO interrupts end-to-end (hardware chain, registers, examples, pitfalls)
+- **RTOS & FreeRTOS** — Theory plus FreeRTOS practice; **[freertos.org](https://www.freertos.org/)** API links in the guide header
+- **FreeRTOS Simulator** — Run FreeRTOS on a PC without hardware
 
 ### Quick Reference
 - Register maps for all peripherals
@@ -134,13 +154,14 @@ EmbeddedDriverDevTutor/
 │   ├── c-programming-lessons.js     # C programming fundamentals
 │   ├── mcu-header-lessons.js        # MCU header file structure
 │   ├── gpio-lessons.js              # GPIO tutorial content
-│   ├── gpio-interrupt-lessons.js    # GPIO interrupt configuration (NEW!)
+│   ├── gpio-interrupt-lessons.js    # GPIO interrupt configuration
 │   ├── spi-lessons.js               # SPI tutorial content
 │   ├── i2c-lessons.js               # I2C tutorial content
-│   └── usart-lessons.js             # USART tutorial content
-├── guides/
-│   └── GPIO_Interrupt_Configuration_Study_Guide.md
-├── GPIO_Interrupt_Configuration_Study_Guide.md  # Reference guide (root)
+│   ├── usart-lessons.js             # USART tutorial content
+│   └── rtos-lessons.js              # RTOS / FreeRTOS (STM32 + freertos.org)
+├── guides/                          # Study guide documents (linked from guides.html)
+├── RTOS_Tutor/                      # Optional: STM32 FreeRTOS examples (separate from lessons)
+├── GPIO_Interrupt_Configuration_Study_Guide.md  # Extra GPIO reference copy (root)
 └── README.md
 ```
 

@@ -362,6 +362,7 @@ body::before {
 .spi-icon { background: rgba(88, 166, 255, 0.15); color: var(--accent-blue); }
 .i2c-icon { background: rgba(163, 113, 247, 0.15); color: var(--accent-purple); }
 .usart-icon { background: rgba(240, 136, 62, 0.15); color: var(--accent-orange); }
+.rtos-icon { background: rgba(57, 197, 207, 0.15); color: var(--accent-cyan); }
 
 .driver-card:hover .card-icon {
     transform: scale(1.1);
@@ -419,6 +420,17 @@ body::before {
     background: rgba(57, 197, 207, 0.15);
     color: var(--accent-cyan);
     font-weight: 600;
+}
+
+.difficulty.mixed {
+    background: rgba(124, 58, 237, 0.12);
+    color: #7c3aed;
+    font-weight: 600;
+}
+
+.lesson-track {
+    margin: 0 0 1rem;
+    font-size: 0.9rem;
 }
 
 .duration {

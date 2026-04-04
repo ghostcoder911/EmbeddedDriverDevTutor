@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Study Guides - STM32 Driver Mentor</title>
+    <title>Study Guides — STM32 Driver Mentor</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
@@ -120,14 +120,14 @@
 
                 <div class="guides-header">
                     <h1 class="guides-title">📚 Study Guides</h1>
-                    <p class="guides-subtitle">Comprehensive reference materials for embedded driver development</p>
+                    <p class="guides-subtitle">Comprehensive reference materials for embedded driver development and FreeRTOS</p>
                 </div>
 
                 <div class="guides-list">
                     <!-- GPIO Interrupt Configuration Guide -->
                     <div class="guide-card" onclick="window.location.href='guides/GPIO_Interrupt_Configuration_Study_Guide.md'">
                         <div style="margin-bottom: 1rem;">
-                            <span class="guide-badge">NEW</span>
+                            <span class="guide-badge" style="background: #64748b;">Driver</span>
                         </div>
                         <h2 class="guide-card-title">🔌 GPIO Interrupt Configuration - Detailed Study Guide</h2>
                         <p class="guide-card-desc">
@@ -141,6 +141,39 @@
                             <span>⏱️ ~60 min read</span>
                             <span>🎯 Beginner to Intermediate</span>
                             <span>📝 1200+ lines</span>
+                        </div>
+                    </div>
+
+                    <div class="guide-card" onclick="window.location.href='guides/RTOS_FreeRTOS_Study_Guide.md'">
+                        <div style="margin-bottom: 1rem;">
+                            <span class="guide-badge">NEW</span>
+                        </div>
+                        <h2 class="guide-card-title">⚙️ RTOS &amp; FreeRTOS — Complete Study Guide</h2>
+                        <p class="guide-card-desc">
+                            Theory (hard/soft real-time, scheduling, IPC) plus practical FreeRTOS on STM32: tasks, queues,
+                            semaphores, mutexes, timers, notifications, memory, and tracing. The guide header links to
+                            FreeRTOS.org documentation for APIs and configuration.
+                        </p>
+                        <div class="guide-card-meta">
+                            <span>📖 Full course</span>
+                            <span>⏱️ Multi-session</span>
+                            <span>🎯 Beginner → Advanced</span>
+                            <span>📝 3700+ lines</span>
+                        </div>
+                    </div>
+
+                    <div class="guide-card" onclick="window.location.href='guides/FreeRTOS_Simulator_Guide.md'">
+                        <div style="margin-bottom: 1rem;">
+                            <span class="guide-badge" style="background: #0d9488;">Simulator</span>
+                        </div>
+                        <h2 class="guide-card-title">🖥️ FreeRTOS Windows Simulator Guide</h2>
+                        <p class="guide-card-desc">
+                            Learn tasks and scheduling on a PC without hardware: build, run, and experiment with the FreeRTOS
+                            simulator. Ideal first step before flashing STM32 projects.
+                        </p>
+                        <div class="guide-card-meta">
+                            <span>📖 Hands-on</span>
+                            <span>🎯 Beginner</span>
                         </div>
                     </div>
 
@@ -192,7 +225,7 @@
 
         <!-- Footer -->
         <footer class="footer">
-            <p>STM32 Driver Mentor Tool - Helping students master embedded driver development</p>
+            <p>STM32 Driver Mentor — embedded drivers and FreeRTOS, step by step</p>
             <p class="footer-note">Based on STM32F446RE Reference Manual (RM0390)</p>
             <div class="footer-developer">
                 <p>Developed by <strong>Neeraj PM</strong></p>

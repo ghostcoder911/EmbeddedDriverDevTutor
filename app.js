@@ -72,7 +72,8 @@ class DriverMentor {
             'gpio-interrupt': 'GPIO Interrupts',
             spi: 'SPI Driver',
             i2c: 'I2C Driver',
-            usart: 'USART Driver'
+            usart: 'USART Driver',
+            rtos: 'RTOS / FreeRTOS'
         };
         document.getElementById('current-driver-title').textContent = driverNames[driver];
 
@@ -176,6 +177,7 @@ class DriverMentor {
             case 'spi': return window.spiLessons || [];
             case 'i2c': return window.i2cLessons || [];
             case 'usart': return window.usartLessons || [];
+            case 'rtos': return window.rtosLessons || [];
             default: return [];
         }
     }
@@ -240,7 +242,7 @@ class DriverMentor {
     }
 
     updateProgressDisplay() {
-        const drivers = ['c-programming', 'mcu-header', 'gpio', 'gpio-interrupt', 'spi', 'i2c', 'usart'];
+        const drivers = ['c-programming', 'mcu-header', 'gpio', 'gpio-interrupt', 'spi', 'i2c', 'usart', 'rtos'];
         
         drivers.forEach(driver => {
             const lessons = this.getDriverLessons(driver);
@@ -265,6 +267,7 @@ class DriverMentor {
             case 'spi': return window.spiLessons || [];
             case 'i2c': return window.i2cLessons || [];
             case 'usart': return window.usartLessons || [];
+            case 'rtos': return window.rtosLessons || [];
             default: return [];
         }
     }
@@ -277,7 +280,8 @@ class DriverMentor {
             { id: 'gpio-interrupt', name: 'GPIO Interrupts', icon: 'gpio-icon' },
             { id: 'spi', name: 'SPI Driver', icon: 'spi-icon' },
             { id: 'i2c', name: 'I2C Driver', icon: 'i2c-icon' },
-            { id: 'usart', name: 'USART Driver', icon: 'usart-icon' }
+            { id: 'usart', name: 'USART Driver', icon: 'usart-icon' },
+            { id: 'rtos', name: 'RTOS / FreeRTOS', icon: 'rtos-icon' }
         ];
 
         let totalCompleted = 0;
@@ -318,20 +322,39 @@ class DriverMentor {
     }
 
     showCompletionMessage() {
-        const driverNames = {
-            'c-programming': 'Embedded C',
-            'mcu-header': 'MCU Header',
-            gpio: 'GPIO',
-            spi: 'SPI',
-            i2c: 'I2C',
-            usart: 'USART'
+        const profiles = {
+            'c-programming': { display: 'Embedded C', style: 'driver' },
+            'mcu-header': { display: 'MCU Header', style: 'driver' },
+            gpio: { display: 'GPIO', style: 'driver' },
+            'gpio-interrupt': { display: 'GPIO Interrupts', style: 'topic' },
+            spi: { display: 'SPI', style: 'driver' },
+            i2c: { display: 'I2C', style: 'driver' },
+            usart: { display: 'USART', style: 'driver' },
+            rtos: { display: 'RTOS / FreeRTOS', style: 'track' }
         };
-
-        // Show the celebration modal with fireworks
-        this.showCelebration(driverNames[this.currentDriver]);
+        const p = profiles[this.currentDriver] || { display: 'lesson', style: 'driver' };
+        this.showCelebration(p);
     }
 
-    showCelebration(driverName) {
+    showCelebration(profile) {
+        const { display, style } = profile;
+        let subtitleHtml;
+        let badgeName;
+        let message;
+        if (style === 'track') {
+            subtitleHtml = `You've mastered the <span class="driver-name">${display}</span> track!`;
+            badgeName = `${display} Expert`;
+            message = 'You can apply scheduling, synchronization, and ISR-safe patterns in firmware. Keep the official FreeRTOS.org API reference open while coding.';
+        } else if (style === 'topic') {
+            subtitleHtml = `You've mastered <span class="driver-name">${display}</span>!`;
+            badgeName = `${display} Expert`;
+            message = 'You now have the knowledge to configure EXTI, NVIC, and interrupt-driven GPIO on STM32. Keep learning and exploring!';
+        } else {
+            subtitleHtml = `You've mastered the <span class="driver-name">${display}</span> driver!`;
+            badgeName = `${display} Driver Expert`;
+            message = `You now have the knowledge to write your own ${display} driver from scratch. Keep learning and exploring!`;
+        }
+
         // Create celebration overlay
         const overlay = document.createElement('div');
         overlay.className = 'celebration-overlay';
@@ -340,15 +363,14 @@ class DriverMentor {
             <div class="celebration-content">
                 <div class="trophy-icon">🏆</div>
                 <h1 class="celebration-title">Congratulations!</h1>
-                <p class="celebration-subtitle">You've mastered the <span class="driver-name">${driverName} Driver</span>!</p>
+                <p class="celebration-subtitle">${subtitleHtml}</p>
                 <div class="achievement-badge">
                     <div class="badge-icon">⭐</div>
                     <div class="badge-text">Achievement Unlocked</div>
-                    <div class="badge-name">${driverName} Driver Expert</div>
+                    <div class="badge-name">${badgeName}</div>
                 </div>
                 <p class="celebration-message">
-                    You now have the knowledge to write your own ${driverName} driver from scratch.
-                    Keep learning and exploring!
+                    ${message}
                 </p>
                 <div class="celebration-buttons">
                     <button class="celebration-btn secondary" onclick="app.closeCelebration(); app.switchView('home');">
