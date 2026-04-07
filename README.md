@@ -13,6 +13,7 @@ This tool guides students step-by-step through writing peripheral drivers for ST
 - **USART Driver** - Serial Communication (Advanced)
 - **RTOS / FreeRTOS** - Tasks, handles, scheduling, semaphores, mutexes, queues, and more (beginner-friendly, links to [FreeRTOS.org](https://www.freertos.org/))
 - **Embedded Interview Prep** - Q&A-style embedded systems and C interview practice
+- **Interview MCQ Practice** - Multiple-choice quizzes (bit manipulation, embedded C, embedded systems) sourced from the **EmbeddedInterviewPrep** app’s JSON question bank; works offline with no login
 
 ## 🚀 Getting Started
 
@@ -143,6 +144,18 @@ Open **Study Guides** in the app (or the bundled Markdown references) for long-f
 - Common macros and definitions
 - Code patterns and best practices
 
+### Regenerating interview MCQ data
+
+The **Interview MCQ Practice** track reads `lessons/embedded-interview-quiz-data.js`, built from the **EmbeddedInterviewPrep** repo (`server/questions.json` + `questions_more.json`). From this project root:
+
+```bash
+# Default: looks for ../EmbeddedInterviewPrep on Desktop (or /home/neeraj/Desktop/EmbeddedInterviewPrep)
+python3 scripts/build_embedded_interview_quiz_data.py
+
+# Or set an explicit path:
+EMBEDDED_INTERVIEW_PREP_ROOT=/path/to/EmbeddedInterviewPrep python3 scripts/build_embedded_interview_quiz_data.py
+```
+
 ## 🛠️ Technology
 
 - Pure HTML, CSS, and JavaScript
@@ -167,7 +180,9 @@ EmbeddedDriverDevTutor/
 │   ├── i2c-lessons.js               # I2C tutorial content
 │   ├── usart-lessons.js             # USART tutorial content
 │   ├── rtos-lessons.js              # RTOS / FreeRTOS (STM32 + freertos.org)
-│   └── embedded-interview-lessons.js # Embedded interview Q&A
+│   ├── embedded-interview-lessons.js # Embedded interview Q&A
+│   └── embedded-interview-quiz-data.js # MCQ bank (generate via scripts/build_embedded_interview_quiz_data.py)
+├── scripts/                         # build_embedded_interview_lessons.py, build_embedded_interview_quiz_data.py, bit_manipulation_qa_data.py
 ├── guides/                          # Study guide documents (linked from guides.html); includes Bit_Manipulation_C_Study_Guide.md
 ├── RTOS_Tutor/                      # Optional: STM32 FreeRTOS examples (separate from lessons)
 ├── GPIO_Interrupt_Configuration_Study_Guide.md  # Extra GPIO reference copy (root)

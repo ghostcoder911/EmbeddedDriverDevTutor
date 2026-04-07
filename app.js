@@ -8,7 +8,14 @@ class DriverMentor {
         this.currentDriver = null;
         this.currentStep = 0;
         this.progress = this.loadProgress();
-        
+        /** @type {Record<number, number>} questionIndex -> selected option index */
+        this.mcqSelections = {};
+        this.mcqSubmitted = false;
+        /** @type {{ score: number; total: number } | null} */
+        this.mcqResult = null;
+        /** Reset MCQ UI when switching category step */
+        this._mcqStep = -1;
+
         this.init();
     }
 
@@ -63,6 +70,9 @@ class DriverMentor {
     selectDriver(driver) {
         this.currentDriver = driver;
         this.currentStep = this.progress[driver]?.currentStep || 0;
+        if (driver === 'interview-mcq') {
+            this._mcqStep = -1;
+        }
         
         // Update sidebar title
         const driverNames = {
@@ -74,7 +84,8 @@ class DriverMentor {
             i2c: 'I2C Driver',
             usart: 'USART Driver',
             rtos: 'RTOS / FreeRTOS',
-            'embedded-interview': 'Embedded Interview Prep'
+            'embedded-interview': 'Embedded Interview Prep',
+            'interview-mcq': 'Interview MCQ Practice'
         };
         document.getElementById('current-driver-title').textContent = driverNames[driver];
 
@@ -122,8 +133,12 @@ class DriverMentor {
         document.getElementById('total-steps').textContent = lessons.length;
         document.getElementById('lesson-title').textContent = lesson.title;
 
-        // Render lesson content
-        document.getElementById('lesson-body').innerHTML = lesson.content;
+        // Render lesson content (MCQ track uses custom renderer)
+        if (this.currentDriver === 'interview-mcq') {
+            this.renderInterviewMcqLesson();
+        } else {
+            document.getElementById('lesson-body').innerHTML = lesson.content;
+        }
 
         // Update navigation buttons
         document.getElementById('prev-step').disabled = this.currentStep === 0;
@@ -150,10 +165,124 @@ class DriverMentor {
         });
 
         // Add copy functionality to code blocks
-        this.initCodeCopy();
+        if (this.currentDriver !== 'interview-mcq') {
+            this.initCodeCopy();
+        }
 
         // Scroll to top of lesson
         document.querySelector('.lesson-content').scrollTop = 0;
+    }
+
+    escapeHtml(str) {
+        if (str == null) return '';
+        const d = document.createElement('div');
+        d.textContent = String(str);
+        return d.innerHTML;
+    }
+
+    getInterviewMcqLessons() {
+        const qz = window.embeddedInterviewQuiz;
+        if (!qz || !Array.isArray(qz.categories)) return [];
+        return qz.categories.map((c) => ({
+            title: c.title,
+            content: '',
+            categoryId: c.id
+        }));
+    }
+
+    renderInterviewMcqLesson() {
+        const data = window.embeddedInterviewQuiz;
+        const body = document.getElementById('lesson-body');
+        const cat = data?.categories?.[this.currentStep];
+        const questions = cat && data.questions ? (data.questions[cat.id] || []) : [];
+
+        if (!cat || questions.length === 0) {
+            body.innerHTML =
+                '<div class="info-box tip"><p>Quiz data not loaded. Ensure <code>lessons/embedded-interview-quiz-data.js</code> is included and run <code>python3 scripts/build_embedded_interview_quiz_data.py</code> to generate it from EmbeddedInterviewPrep.</p></div>';
+            return;
+        }
+
+        if (this._mcqStep !== this.currentStep) {
+            this._mcqStep = this.currentStep;
+            this.mcqSelections = {};
+            this.mcqSubmitted = false;
+            this.mcqResult = null;
+        }
+
+        const esc = (s) => this.escapeHtml(s);
+        let html = `<div class="mcq-intro"><p class="lesson-lead">${esc(cat.description)}</p>`;
+        html += `<p class="mcq-meta-line"><strong>${questions.length}</strong> multiple-choice questions · Same topics as the <strong>EmbeddedInterviewPrep</strong> app (offline practice here).</p></div>`;
+        html += '<div class="mcq-stack">';
+
+        questions.forEach((q, qi) => {
+            const sel = this.mcqSelections[qi];
+            const diff = q.difficulty || 'medium';
+            const diffSlug = String(diff).replace(/[^a-z0-9_-]/gi, '');
+            html += `<div class="mcq-card">`;
+            html += `<p class="mcq-qline">Q${qi + 1} · <span class="mcq-diff mcq-diff-${diffSlug}">${esc(diff)}</span></p>`;
+            html += `<p class="mcq-qtext">${esc(q.question_text)}</p>`;
+            html += '<div class="mcq-options">';
+            q.options.forEach((opt, oi) => {
+                const selected = sel === oi;
+                const showCorrect = this.mcqSubmitted && oi === q.correct_index;
+                const showWrong = this.mcqSubmitted && selected && oi !== q.correct_index;
+                let cls = 'mcq-option';
+                if (selected) cls += ' is-selected';
+                if (showCorrect) cls += ' is-correct';
+                if (showWrong) cls += ' is-wrong';
+                const dis = this.mcqSubmitted ? ' disabled' : '';
+                html += `<button type="button" class="${cls}" data-mcq-qi="${qi}" data-mcq-oi="${oi}"${dis}>${esc(opt)}</button>`;
+            });
+            html += '</div></div>';
+        });
+
+        html += '</div>';
+
+        if (this.mcqSubmitted && this.mcqResult) {
+            const pct = Math.round((this.mcqResult.score / this.mcqResult.total) * 100);
+            html += `<div class="mcq-result"><h3 class="mcq-result-title">Score</h3>`;
+            html += `<p class="mcq-result-score">${this.mcqResult.score} / ${this.mcqResult.total} <span class="mcq-pct">(${pct}%)</span></p>`;
+            html += '<p class="mcq-result-hint">Unanswered questions count as wrong. Use the sidebar to switch topic or try another track.</p></div>';
+        } else {
+            html += '<div class="mcq-footer-actions"><button type="button" class="btn-mcq-submit" id="mcq-submit-btn">Submit answers</button></div>';
+        }
+
+        body.innerHTML = html;
+
+        body.querySelectorAll('.mcq-option:not([disabled])').forEach((btn) => {
+            btn.addEventListener('click', () => {
+                const qi = parseInt(btn.getAttribute('data-mcq-qi'), 10);
+                const oi = parseInt(btn.getAttribute('data-mcq-oi'), 10);
+                this.mcqSelections[qi] = oi;
+                this.renderInterviewMcqLesson();
+            });
+        });
+
+        const sub = document.getElementById('mcq-submit-btn');
+        if (sub) {
+            sub.addEventListener('click', () => this.submitInterviewMcq());
+        }
+    }
+
+    submitInterviewMcq() {
+        const data = window.embeddedInterviewQuiz;
+        const cat = data?.categories?.[this.currentStep];
+        const questions = cat && data.questions ? data.questions[cat.id] : [];
+        if (!questions.length) return;
+
+        let score = 0;
+        questions.forEach((q, qi) => {
+            const sel = this.mcqSelections[qi];
+            if (typeof sel === 'number' && sel === q.correct_index) score++;
+        });
+
+        this.mcqSubmitted = true;
+        this.mcqResult = { score, total: questions.length };
+        this.markStepCompleted(this.currentStep);
+        this.saveProgress();
+        this.renderInterviewMcqLesson();
+        this.renderStepsList();
+        this.updateProgressDisplay();
     }
 
     initCodeCopy() {
@@ -180,6 +309,7 @@ class DriverMentor {
             case 'usart': return window.usartLessons || [];
             case 'rtos': return window.rtosLessons || [];
             case 'embedded-interview': return window.embeddedInterviewLessons || [];
+            case 'interview-mcq': return this.getInterviewMcqLessons();
             default: return [];
         }
     }
@@ -195,15 +325,39 @@ class DriverMentor {
 
     nextStep() {
         const lessons = this.getLessons();
+        if (this.currentDriver === 'interview-mcq' && !this.mcqSubmitted) {
+            const data = window.embeddedInterviewQuiz;
+            const cat = data?.categories?.[this.currentStep];
+            const n = cat && data?.questions?.[cat.id] ? data.questions[cat.id].length : 0;
+            if (n > 0) {
+                alert('Submit your answers for this topic before going to the next step.');
+                return;
+            }
+        }
         if (this.currentStep < lessons.length - 1) {
-            this.markStepCompleted(this.currentStep);
+            if (this.currentDriver !== 'interview-mcq') {
+                this.markStepCompleted(this.currentStep);
+            } else if (this.mcqSubmitted) {
+                this.markStepCompleted(this.currentStep);
+            }
             this.currentStep++;
             this.saveProgress();
             this.renderLesson();
             this.renderStepsList();
         } else {
-            // Complete the driver
-            this.markStepCompleted(this.currentStep);
+            if (this.currentDriver === 'interview-mcq' && !this.mcqSubmitted) {
+                const data = window.embeddedInterviewQuiz;
+                const cat = data?.categories?.[this.currentStep];
+                if (cat && data?.questions?.[cat.id]?.length) {
+                    alert('Submit your answers to complete this topic.');
+                    return;
+                }
+            }
+            if (this.currentDriver !== 'interview-mcq') {
+                this.markStepCompleted(this.currentStep);
+            } else if (this.mcqSubmitted) {
+                this.markStepCompleted(this.currentStep);
+            }
             this.saveProgress();
             this.showCompletionMessage();
         }
@@ -244,7 +398,7 @@ class DriverMentor {
     }
 
     updateProgressDisplay() {
-        const drivers = ['c-programming', 'mcu-header', 'gpio', 'gpio-interrupt', 'spi', 'i2c', 'usart', 'rtos', 'embedded-interview'];
+        const drivers = ['c-programming', 'mcu-header', 'gpio', 'gpio-interrupt', 'spi', 'i2c', 'usart', 'rtos', 'embedded-interview', 'interview-mcq'];
         
         drivers.forEach(driver => {
             const lessons = this.getDriverLessons(driver);
@@ -271,6 +425,7 @@ class DriverMentor {
             case 'usart': return window.usartLessons || [];
             case 'rtos': return window.rtosLessons || [];
             case 'embedded-interview': return window.embeddedInterviewLessons || [];
+            case 'interview-mcq': return this.getInterviewMcqLessons();
             default: return [];
         }
     }
@@ -285,7 +440,8 @@ class DriverMentor {
             { id: 'i2c', name: 'I2C Driver', icon: 'i2c-icon' },
             { id: 'usart', name: 'USART Driver', icon: 'usart-icon' },
             { id: 'rtos', name: 'RTOS / FreeRTOS', icon: 'rtos-icon' },
-            { id: 'embedded-interview', name: 'Embedded Interview Prep', icon: 'interview-icon' }
+            { id: 'embedded-interview', name: 'Embedded Interview Prep', icon: 'interview-icon' },
+            { id: 'interview-mcq', name: 'Interview MCQ Practice', icon: 'interview-icon' }
         ];
 
         let totalCompleted = 0;
@@ -335,7 +491,8 @@ class DriverMentor {
             i2c: { display: 'I2C', style: 'driver' },
             usart: { display: 'USART', style: 'driver' },
             rtos: { display: 'RTOS / FreeRTOS', style: 'track' },
-            'embedded-interview': { display: 'Embedded Interview Prep', style: 'interview' }
+            'embedded-interview': { display: 'Embedded Interview Prep', style: 'interview' },
+            'interview-mcq': { display: 'Interview MCQ Practice', style: 'interview-mcq' }
         };
         const p = profiles[this.currentDriver] || { display: 'lesson', style: 'driver' };
         this.showCelebration(p);
@@ -346,7 +503,12 @@ class DriverMentor {
         let subtitleHtml;
         let badgeName;
         let message;
-        if (style === 'track') {
+        if (style === 'interview-mcq') {
+            subtitleHtml = `You've completed <span class="driver-name">${display}</span>!`;
+            badgeName = 'MCQ sets — cleared';
+            message =
+                'You finished all three quiz topics (bit manipulation, embedded C, embedded systems). Open any step again from the sidebar to retake a quiz and improve your score.';
+        } else if (style === 'track') {
             subtitleHtml = `You've mastered the <span class="driver-name">${display}</span> track!`;
             badgeName = `${display} Expert`;
             message = 'You can apply scheduling, synchronization, and ISR-safe patterns in firmware. Keep the official FreeRTOS.org API reference open while coding.';
