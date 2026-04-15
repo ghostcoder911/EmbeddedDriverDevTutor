@@ -16,6 +16,13 @@ class DriverMentor {
         /** Reset MCQ UI when switching category step */
         this._mcqStep = -1;
 
+        /** Text mock interview (InterviewPreperationAgent question bank, no voice) */
+        this.mockPhase = 'intro';
+        this.mockQi = 0;
+        this.mockAnswers = [];
+        this.mockEvalResults = [];
+        this._mockSummaryCelebrationShown = false;
+
         this.init();
     }
 
@@ -73,7 +80,11 @@ class DriverMentor {
         if (driver === 'interview-mcq') {
             this._mcqStep = -1;
         }
-        
+        if (driver === 'mock-interview') {
+            this.resetMockInterviewSession();
+            this._mockSummaryCelebrationShown = false;
+        }
+
         // Update sidebar title
         const driverNames = {
             'c-programming': 'Embedded C Programming',
@@ -85,7 +96,8 @@ class DriverMentor {
             usart: 'USART Driver',
             rtos: 'RTOS / FreeRTOS',
             'embedded-interview': 'Embedded Interview Prep',
-            'interview-mcq': 'Interview MCQ Practice'
+            'interview-mcq': 'Interview MCQ Practice',
+            'mock-interview': 'Mock Interview (text)'
         };
         document.getElementById('current-driver-title').textContent = driverNames[driver];
 
@@ -128,6 +140,17 @@ class DriverMentor {
         const lessons = this.getLessons();
         const lesson = lessons[this.currentStep];
 
+        if (this.currentDriver === 'mock-interview') {
+            document.querySelector('.lesson-navigation')?.classList.add('lesson-nav-hidden');
+            this.renderMockInterviewLesson();
+            document.querySelectorAll('.step-item').forEach((item, index) => {
+                item.classList.toggle('active', index === this.currentStep);
+            });
+            document.querySelector('.lesson-content').scrollTop = 0;
+            return;
+        }
+        document.querySelector('.lesson-navigation')?.classList.remove('lesson-nav-hidden');
+
         // Update step indicator
         document.getElementById('current-step-num').textContent = `Step ${this.currentStep + 1}`;
         document.getElementById('total-steps').textContent = lessons.length;
@@ -165,7 +188,7 @@ class DriverMentor {
         });
 
         // Add copy functionality to code blocks
-        if (this.currentDriver !== 'interview-mcq') {
+        if (this.currentDriver !== 'interview-mcq' && this.currentDriver !== 'mock-interview') {
             this.initCodeCopy();
         }
 
@@ -188,6 +211,157 @@ class DriverMentor {
             content: '',
             categoryId: c.id
         }));
+    }
+
+    resetMockInterviewSession() {
+        this.mockPhase = 'intro';
+        this.mockQi = 0;
+        this.mockAnswers = [];
+        this.mockEvalResults = [];
+        this._mockSummaryCelebrationShown = false;
+    }
+
+    getMockInterviewLessons() {
+        return [
+            {
+                title: 'Embedded mock interview',
+                content: '',
+            },
+        ];
+    }
+
+    renderMockInterviewLesson() {
+        const data = window.mockInterviewData;
+        const body = document.getElementById('lesson-body');
+        const esc = (s) => this.escapeHtml(s);
+        const total = data?.questions?.length || 0;
+
+        document.getElementById('lesson-title').textContent = 'Mock interview (text)';
+        const phase = this.mockPhase;
+        const qi = this.mockQi;
+
+        if (!data || !total) {
+            body.innerHTML =
+                '<div class="info-box tip"><p><code>mock-interview-data.js</code> not loaded.</p></div>';
+            return;
+        }
+
+        if (phase === 'intro') {
+            document.getElementById('current-step-num').textContent = 'Start';
+            document.getElementById('total-steps').textContent = `${total} questions`;
+            body.innerHTML = `
+                <div class="mock-interview-wrap">
+                    <div class="info-box tip">
+                        <div class="info-box-title">Text mock interview</div>
+                        <p>This uses the same <strong>8 embedded interview questions</strong> as the
+                        <strong>InterviewPreperationAgent</strong> desktop app, in <strong>text only</strong> (no microphone or TTS).</p>
+                        <p>Type each answer, submit for an instant <strong>score (0–10)</strong> and <strong>keyword-based feedback</strong>.
+                        This is a practice aid—not a human interviewer.</p>
+                    </div>
+                    <button type="button" class="btn-mock-primary" id="mock-start-btn">Start interview</button>
+                </div>`;
+            document.getElementById('mock-start-btn').addEventListener('click', () => {
+                this.mockPhase = 'question';
+                this.renderLesson();
+            });
+            return;
+        }
+
+        if (phase === 'summary') {
+            document.getElementById('current-step-num').textContent = 'Summary';
+            document.getElementById('total-steps').textContent = `${total} questions`;
+            const scores = this.mockEvalResults.map((r) => r.score);
+            const avg = scores.length ? (scores.reduce((a, b) => a + b, 0) / scores.length).toFixed(1) : '—';
+            let rows = '';
+            for (let i = 0; i < scores.length; i++) {
+                rows += `<tr><td>Q${i + 1}</td><td>${scores[i]} / 10</td></tr>`;
+            }
+            body.innerHTML = `
+                <div class="mock-interview-wrap">
+                    <h2 class="mock-h2">Session complete</h2>
+                    <p class="mock-lead">Average score: <strong>${avg}</strong> / 10</p>
+                    <table class="mock-score-table"><thead><tr><th>Question</th><th>Score</th></tr></thead><tbody>${rows}</tbody></table>
+                    <p class="mock-meta">Keep practicing out loud; refine answers using the feedback hints above.</p>
+                    <button type="button" class="btn-mock-secondary" id="mock-restart-btn">Start over</button>
+                </div>`;
+            document.getElementById('mock-restart-btn').addEventListener('click', () => {
+                this.resetMockInterviewSession();
+                this.mockPhase = 'intro';
+                this.renderLesson();
+            });
+            this.markStepCompleted(0);
+            this.saveProgress();
+            this.updateProgressDisplay();
+            if (!this._mockSummaryCelebrationShown) {
+                this._mockSummaryCelebrationShown = true;
+                setTimeout(() => this.showCompletionMessage(), 500);
+            }
+            return;
+        }
+
+        if (phase === 'feedback') {
+            const ev = this.mockEvalResults[this.mockEvalResults.length - 1];
+            const qtext = data.questions[qi].text;
+            document.getElementById('current-step-num').textContent = `Q ${qi + 1}`;
+            document.getElementById('total-steps').textContent = `Feedback`;
+            let fb = '';
+            ev.feedback.forEach((line) => {
+                fb += `<li>${esc(line)}</li>`;
+            });
+            const lastQ = qi >= total - 1;
+            body.innerHTML = `
+                <div class="mock-interview-wrap">
+                    <p class="mock-progress">Question ${qi + 1} of ${total}</p>
+                    <p class="mock-qpreview">${esc(qtext)}</p>
+                    <div class="mock-feedback-card">
+                        <p class="mock-scoreline">Score: <strong>${ev.score}</strong> / ${ev.maxScore}</p>
+                        <ul class="mock-feedback-list">${fb}</ul>
+                    </div>
+                    <button type="button" class="btn-mock-primary" id="mock-next-btn">${lastQ ? 'View summary' : 'Next question'}</button>
+                </div>`;
+            document.getElementById('mock-next-btn').addEventListener('click', () => {
+                if (lastQ) {
+                    this.mockPhase = 'summary';
+                } else {
+                    this.mockPhase = 'question';
+                    this.mockQi += 1;
+                }
+                this.renderLesson();
+            });
+            return;
+        }
+
+        // question phase
+        const q = data.questions[qi];
+        document.getElementById('current-step-num').textContent = `Q ${qi + 1}`;
+        document.getElementById('total-steps').textContent = `${total} questions`;
+        const prevAns = this.mockAnswers[qi] || '';
+        body.innerHTML = `
+            <div class="mock-interview-wrap">
+                <p class="mock-progress">Question ${qi + 1} of ${total}</p>
+                <div class="mock-qbox">
+                    <p class="mock-qtext">${esc(q.text)}</p>
+                </div>
+                <label class="mock-label" for="mock-answer-ta">Your answer</label>
+                <textarea id="mock-answer-ta" class="mock-textarea" rows="10" placeholder="Type your answer here…"></textarea>
+                <div class="mock-actions">
+                    <button type="button" class="btn-mock-primary" id="mock-submit-answer">Submit answer</button>
+                </div>
+            </div>`;
+        const ta = document.getElementById('mock-answer-ta');
+        ta.value = prevAns;
+        document.getElementById('mock-submit-answer').addEventListener('click', () => {
+            const text = ta.value.trim();
+            if (text.length < 3) {
+                alert('Please write at least a few words before submitting.');
+                return;
+            }
+            this.mockAnswers[qi] = text;
+            const ev = data.evaluateAnswer(qi, text);
+            this.mockEvalResults.push(ev);
+            this.mockPhase = 'feedback';
+            this.renderLesson();
+        });
     }
 
     renderInterviewMcqLesson() {
@@ -310,6 +484,7 @@ class DriverMentor {
             case 'rtos': return window.rtosLessons || [];
             case 'embedded-interview': return window.embeddedInterviewLessons || [];
             case 'interview-mcq': return this.getInterviewMcqLessons();
+            case 'mock-interview': return this.getMockInterviewLessons();
             default: return [];
         }
     }
@@ -398,7 +573,7 @@ class DriverMentor {
     }
 
     updateProgressDisplay() {
-        const drivers = ['c-programming', 'mcu-header', 'gpio', 'gpio-interrupt', 'spi', 'i2c', 'usart', 'rtos', 'embedded-interview', 'interview-mcq'];
+        const drivers = ['c-programming', 'mcu-header', 'gpio', 'gpio-interrupt', 'spi', 'i2c', 'usart', 'rtos', 'embedded-interview', 'interview-mcq', 'mock-interview'];
         
         drivers.forEach(driver => {
             const lessons = this.getDriverLessons(driver);
@@ -426,6 +601,7 @@ class DriverMentor {
             case 'rtos': return window.rtosLessons || [];
             case 'embedded-interview': return window.embeddedInterviewLessons || [];
             case 'interview-mcq': return this.getInterviewMcqLessons();
+            case 'mock-interview': return this.getMockInterviewLessons();
             default: return [];
         }
     }
@@ -441,7 +617,8 @@ class DriverMentor {
             { id: 'usart', name: 'USART Driver', icon: 'usart-icon' },
             { id: 'rtos', name: 'RTOS / FreeRTOS', icon: 'rtos-icon' },
             { id: 'embedded-interview', name: 'Embedded Interview Prep', icon: 'interview-icon' },
-            { id: 'interview-mcq', name: 'Interview MCQ Practice', icon: 'interview-icon' }
+            { id: 'interview-mcq', name: 'Interview MCQ Practice', icon: 'interview-icon' },
+            { id: 'mock-interview', name: 'Mock Interview (text)', icon: 'interview-icon' }
         ];
 
         let totalCompleted = 0;
@@ -492,7 +669,8 @@ class DriverMentor {
             usart: { display: 'USART', style: 'driver' },
             rtos: { display: 'RTOS / FreeRTOS', style: 'track' },
             'embedded-interview': { display: 'Embedded Interview Prep', style: 'interview' },
-            'interview-mcq': { display: 'Interview MCQ Practice', style: 'interview-mcq' }
+            'interview-mcq': { display: 'Interview MCQ Practice', style: 'interview-mcq' },
+            'mock-interview': { display: 'Mock Interview (text)', style: 'mock-interview' }
         };
         const p = profiles[this.currentDriver] || { display: 'lesson', style: 'driver' };
         this.showCelebration(p);
@@ -508,6 +686,11 @@ class DriverMentor {
             badgeName = 'MCQ sets — cleared';
             message =
                 'You finished all three quiz topics (bit manipulation, embedded C, embedded systems). Open any step again from the sidebar to retake a quiz and improve your score.';
+        } else if (style === 'mock-interview') {
+            subtitleHtml = `You've finished the <span class="driver-name">${display}</span> session!`;
+            badgeName = 'Mock interview — completed';
+            message =
+                'You worked through all eight embedded questions with text answers and feedback. Practice explaining answers aloud and compare with senior engineers when you can.';
         } else if (style === 'track') {
             subtitleHtml = `You've mastered the <span class="driver-name">${display}</span> track!`;
             badgeName = `${display} Expert`;

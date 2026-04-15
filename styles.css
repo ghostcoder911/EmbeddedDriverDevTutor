@@ -595,6 +595,125 @@ body::before {
     color: var(--text-secondary);
 }
 
+/* Mock interview (text) — InterviewPreperationAgent question bank */
+.lesson-navigation.lesson-nav-hidden {
+    display: none;
+}
+.mock-interview-wrap {
+    max-width: 720px;
+}
+.mock-h2 {
+    margin: 0 0 0.75rem;
+    font-size: 1.35rem;
+}
+.mock-lead {
+    font-size: 1.1rem;
+    margin: 0 0 1rem;
+}
+.mock-meta {
+    color: var(--text-secondary);
+    font-size: 0.95rem;
+    margin: 1rem 0;
+}
+.mock-progress {
+    font-size: 0.9rem;
+    color: var(--text-secondary);
+    margin: 0 0 1rem;
+}
+.mock-qbox {
+    padding: 1rem 1.1rem;
+    background: var(--bg-tertiary, rgba(0, 0, 0, 0.04));
+    border-radius: var(--radius-md, 8px);
+    border-left: 3px solid var(--accent-blue, #2563eb);
+    margin-bottom: 1rem;
+}
+.mock-qtext {
+    margin: 0;
+    line-height: 1.55;
+    font-size: 1.02rem;
+}
+.mock-qpreview {
+    font-size: 0.88rem;
+    color: var(--text-secondary);
+    line-height: 1.45;
+    margin: 0 0 1rem;
+}
+.mock-label {
+    display: block;
+    font-weight: 600;
+    margin-bottom: 0.35rem;
+    font-size: 0.95rem;
+}
+.mock-textarea {
+    width: 100%;
+    box-sizing: border-box;
+    padding: 0.85rem 1rem;
+    font-family: inherit;
+    font-size: 0.95rem;
+    line-height: 1.5;
+    border-radius: 8px;
+    border: 1px solid var(--border-subtle, rgba(0, 0, 0, 0.15));
+    resize: vertical;
+    min-height: 160px;
+    margin-bottom: 1rem;
+}
+.mock-actions {
+    display: flex;
+    gap: 0.75rem;
+    flex-wrap: wrap;
+}
+.btn-mock-primary,
+.btn-mock-secondary {
+    padding: 0.7rem 1.4rem;
+    font-size: 1rem;
+    font-weight: 600;
+    font-family: inherit;
+    border-radius: 10px;
+    cursor: pointer;
+    border: none;
+}
+.btn-mock-primary {
+    background: linear-gradient(135deg, var(--accent-blue, #2563eb), #1d4ed8);
+    color: #fff;
+}
+.btn-mock-secondary {
+    background: var(--bg-tertiary);
+    color: var(--text-primary);
+    border: 1px solid var(--border-subtle);
+}
+.mock-feedback-card {
+    padding: 1rem 1.15rem;
+    background: rgba(37, 99, 235, 0.06);
+    border-radius: 8px;
+    border: 1px solid rgba(37, 99, 235, 0.2);
+    margin: 1rem 0;
+}
+.mock-scoreline {
+    margin: 0 0 0.5rem;
+    font-size: 1.15rem;
+}
+.mock-feedback-list {
+    margin: 0;
+    padding-left: 1.25rem;
+    line-height: 1.55;
+    color: var(--text-secondary);
+}
+.mock-score-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 1rem 0;
+    font-size: 0.95rem;
+}
+.mock-score-table th,
+.mock-score-table td {
+    border: 1px solid var(--border-subtle);
+    padding: 0.5rem 0.75rem;
+    text-align: left;
+}
+.mock-score-table th {
+    background: var(--bg-tertiary);
+}
+
 .duration {
     background: var(--bg-tertiary);
     color: var(--text-secondary);
