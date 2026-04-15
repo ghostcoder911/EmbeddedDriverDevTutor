@@ -76,11 +76,11 @@ EXTRA_C_QA: list[tuple[str, str]] = [
     ),
     (
         "How do you detect integer overflow safely in C?",
-        "Unsigned overflow wraps modulo 2^n (defined). Signed overflow is undefined behavior—avoid `a + b > MAX` naively. Check operands before the operation, use wider types, or compiler builtins/intrinsics for checked arithmetic when available.",
+        "Unsigned overflow wraps modulo 2^n (defined). Signed overflow is undefined behavior - avoid `a + b > MAX` naively. Check operands before the operation, use wider types, or compiler builtins/intrinsics for checked arithmetic when available.",
     ),
     (
         "What is the difference between `strcmp` and `strncmp`?",
-        "`strcmp` compares two strings until `\\0`. `strncmp` compares at most `n` characters—useful to bound work and avoid reading past a buffer when you are not sure a string is terminated.",
+        "`strcmp` compares two strings until `\\0`. `strncmp` compares at most `n` characters - useful to bound work and avoid reading past a buffer when you are not sure a string is terminated.",
     ),
     (
         "Why can `sizeof` not be used on VLAs the same way everywhere?",
@@ -88,7 +88,7 @@ EXTRA_C_QA: list[tuple[str, str]] = [
     ),
     (
         "What is a circular buffer (ring buffer), and why use it in embedded?",
-        "A fixed-size array with head/tail indices used as a queue—common for UART RX, ISR-to-task handoff. Often lock-free with one writer and one reader, or protected by a mutex if multiple writers exist.",
+        "A fixed-size array with head/tail indices used as a queue - common for UART RX, ISR-to-task handoff. Often lock-free with one writer and one reader, or protected by a mutex if multiple writers exist.",
     ),
     (
         "What is the purpose of `assert` in development?",
@@ -96,11 +96,11 @@ EXTRA_C_QA: list[tuple[str, str]] = [
     ),
     (
         "Explain `size_t` vs `ssize_t`.",
-        "`size_t` is an unsigned type for sizes and counts (result of `sizeof`). `ssize_t` is signed; used by some POSIX APIs (e.g. `read`/`write`) to signal errors with `-1`. Mixing signed/unsigned in comparisons is a common bug—promote carefully.",
+        "`size_t` is an unsigned type for sizes and counts (result of `sizeof`). `ssize_t` is signed; used by some POSIX APIs (e.g. `read`/`write`) to signal errors with `-1`. Mixing signed/unsigned in comparisons is a common bug - promote carefully.",
     ),
     (
         "What is a function pointer, and a typical embedded use?",
-        "A variable that holds the address of a function—type is `return_type (*)(args)`. Used for callbacks, state machines, HAL tables, and virtual dispatch. Ensure the signature matches exactly.",
+        "A variable that holds the address of a function - type is `return_type (*)(args)`. Used for callbacks, state machines, HAL tables, and virtual dispatch. Ensure the signature matches exactly.",
     ),
     (
         "What is the difference between `char *` and `unsigned char *` for buffers?",
@@ -108,7 +108,7 @@ EXTRA_C_QA: list[tuple[str, str]] = [
     ),
     (
         "What is stack overflow in embedded C, and how do you mitigate it?",
-        "The stack holds return addresses, locals, and saved registers. Deep recursion or large local arrays can exceed the stack region—often catastrophic on MCUs. Mitigate: avoid unbounded recursion, cap buffer sizes, use static or heap where appropriate, and measure high-water marks in RTOS tasks.",
+        "The stack holds return addresses, locals, and saved registers. Deep recursion or large local arrays can exceed the stack region - often catastrophic on MCUs. Mitigate: avoid unbounded recursion, cap buffer sizes, use static or heap where appropriate, and measure high-water marks in RTOS tasks.",
     ),
     (
         "What is `memcpy` vs `memmove`?",
@@ -120,7 +120,7 @@ EXTRA_C_QA: list[tuple[str, str]] = [
     ),
     (
         "What is `_Static_assert` (C11)?",
-        "Compile-time assertion: `_Static_assert(sizeof(int) == 4, \"expected 4-byte int\");` fails the build if the condition is false—useful for ABI/layout checks in portable code.",
+        "Compile-time assertion: `_Static_assert(sizeof(int) == 4, \"expected 4-byte int\");` fails the build if the condition is false - useful for ABI/layout checks in portable code.",
     ),
     (
         "Why avoid floating point on small MCUs unless necessary?",
@@ -132,15 +132,15 @@ EXTRA_C_QA: list[tuple[str, str]] = [
     ),
     (
         "Difference between `exit` and `_Exit`?",
-        "`exit` runs `atexit` handlers and flushes stdio. `_Exit` terminates immediately without those—closer to immediate halt; sometimes relevant in bare-metal hosted environments.",
+        "`exit` runs `atexit` handlers and flushes stdio. `_Exit` terminates immediately without those - closer to immediate halt; sometimes relevant in bare-metal hosted environments.",
     ),
     (
         "What is a reentrant function?",
-        "Safe to call while another invocation is in progress (e.g. from main and ISR) if it uses only stack locals and no shared mutable globals. Standard C library functions may not all be reentrant—check vendor docs for embedded libraries.",
+        "Safe to call while another invocation is in progress (e.g. from main and ISR) if it uses only stack locals and no shared mutable globals. Standard C library functions may not all be reentrant - check vendor docs for embedded libraries.",
     ),
     (
         "What is tail recursion? Is it optimized on embedded compilers?",
-        "Tail recursion is when the recursive call is the last operation; theoretically convertible to a loop. Do not rely on it for stack safety on embedded—prefer iterative code unless you verify the compiler optimizes it away.",
+        "Tail recursion is when the recursive call is the last operation; theoretically convertible to a loop. Do not rely on it for stack safety on embedded - prefer iterative code unless you verify the compiler optimizes it away.",
     ),
     (
         "What is `intptr_t` / `uintptr_t`?",
@@ -156,7 +156,7 @@ EXTRA_C_QA: list[tuple[str, str]] = [
     ),
     (
         "What is the difference between bitwise AND `&` and logical AND `&&`?",
-        "`&` operates on each bit (e.g. masking). `&&` short-circuits logical truth—stops evaluating if the result is known. Do not confuse when testing register bits.",
+        "`&` operates on each bit (e.g. masking). `&&` short-circuits logical truth - stops evaluating if the result is known. Do not confuse when testing register bits.",
     ),
     (
         "How do you swap two integers without a temporary (and should you)?",
@@ -164,11 +164,11 @@ EXTRA_C_QA: list[tuple[str, str]] = [
     ),
     (
         "What is an opaque pointer (handle) in APIs?",
-        "The header exposes only `typedef struct Foo *FooHandle;` while the struct definition is hidden in one `.c` file—encapsulation, ABI stability, and simpler client code.",
+        "The header exposes only `typedef struct Foo *FooHandle;` while the struct definition is hidden in one `.c` file - encapsulation, ABI stability, and simpler client code.",
     ),
     (
         "What is the difference between `fprintf`, `sprintf`, and `snprintf`?",
-        "`sprintf` is unsafe without bounds—buffer overrun. `snprintf` takes a size limit and is preferred. Never use unchecked `sprintf` on user or external data.",
+        "`sprintf` is unsafe without bounds - buffer overrun. `snprintf` takes a size limit and is preferred. Never use unchecked `sprintf` on user or external data.",
     ),
     (
         "What is undefined behavior vs implementation-defined vs unspecified?",
@@ -184,7 +184,7 @@ EXTRA_C_QA: list[tuple[str, str]] = [
     ),
     (
         "What is the purpose of `const` correctness?",
-        "Marking pointers and parameters `const` documents immutability and lets the compiler catch accidental writes—especially for buffers passed through driver APIs.",
+        "Marking pointers and parameters `const` documents immutability and lets the compiler catch accidental writes - especially for buffers passed through driver APIs.",
     ),
     (
         "Difference between `read`/`write` (POSIX) and `fread`/`fwrite`?",
@@ -192,11 +192,11 @@ EXTRA_C_QA: list[tuple[str, str]] = [
     ),
     (
         "What is dead code elimination?",
-        "The compiler removes code that cannot execute or whose result is unused. `volatile` accesses cannot be eliminated the same way—important for hardware register sequences.",
+        "The compiler removes code that cannot execute or whose result is unused. `volatile` accesses cannot be eliminated the same way - important for hardware register sequences.",
     ),
     (
         "What is a callback function in embedded drivers?",
-        "A function pointer registered with a driver to be invoked when an operation completes or data arrives—decouples the driver from application logic.",
+        "A function pointer registered with a driver to be invoked when an operation completes or data arrives - decouples the driver from application logic.",
     ),
     (
         "What is endianness when sending a `uint32_t` over UART?",
@@ -204,11 +204,11 @@ EXTRA_C_QA: list[tuple[str, str]] = [
     ),
     (
         "What is the role of `stdin`/`stdout`/`stderr` on a bare-metal system?",
-        "Often retargeted: `printf` goes to UART/SWO, or stubbed out. You provide `_write` (newlib) or similar for semihosting—know your toolchain's minimal syscall requirements.",
+        "Often retargeted: `printf` goes to UART/SWO, or stubbed out. You provide `_write` (newlib) or similar for semihosting - know your toolchain's minimal syscall requirements.",
     ),
     (
         "What is a race condition in shared variables?",
-        "Two contexts (tasks or ISR + main) read/modify/write without synchronization—last writer wins unpredictably. Fix: disable interrupts briefly, use atomic ops, mutex, or message passing—depending on context.",
+        "Two contexts (tasks or ISR + main) read/modify/write without synchronization - last writer wins unpredictably. Fix: disable interrupts briefly, use atomic ops, mutex, or message passing - depending on context.",
     ),
     (
         "What is `intptr_t` used for in practice?",
@@ -216,7 +216,7 @@ EXTRA_C_QA: list[tuple[str, str]] = [
     ),
     (
         "What is the difference between global and static global variables for memory?",
-        "Both typically live in `.bss` (zero-init) or `.data` (init). `static` limits visibility to the file—can help the linker strip unused symbols and avoids polluting the global namespace.",
+        "Both typically live in `.bss` (zero-init) or `.data` (init). `static` limits visibility to the file - can help the linker strip unused symbols and avoids polluting the global namespace.",
     ),
 ]
 
@@ -231,7 +231,7 @@ def extract_pdf(path: Path) -> str:
 
 
 def extract_pdf_page(path: Path, page_index: int) -> str:
-    """Extract a single page (0-based index) — avoids reading huge PDFs end-to-end."""
+    """Extract a single page (0-based index) - avoids reading huge PDFs end-to-end."""
     r = PdfReader(str(path))
     if page_index < 0 or page_index >= len(r.pages):
         return ""
@@ -407,7 +407,7 @@ def build_bit_manipulation_qa(pdf_path: Path) -> list[tuple[int, str, str]]:
 
 def write_bit_manipulation_guide_md(path: Path, qa: list[tuple[int, str, str]], pdf_name: str) -> None:
     lines = [
-        "# Bit manipulation in C — study guide",
+        "# Bit manipulation in C - study guide",
         "",
         f"This guide matches the numbered index in `{pdf_name}` (see the PDF’s index page). "
         "Suggested answers are concise interview notes; verify edge cases (sign, width, overflow) on your target.",
@@ -505,7 +505,7 @@ def main() -> None:
         parts = [qa_block(q, fmt_answer_html(a)) for _, q, a in chunk]
         lessons.append(
             {
-                "title": f"Embedded concepts — questions {first}–{last}",
+                "title": f"Embedded concepts - questions {first}–{last}",
                 "content": "\n".join(parts),
             }
         )
@@ -517,7 +517,7 @@ def main() -> None:
         n = i // c_batch + 1
         lessons.append(
             {
-                "title": f"C programming — practice set {n}",
+                "title": f"C programming - practice set {n}",
                 "content": "\n".join(parts),
             }
         )
@@ -534,14 +534,14 @@ def main() -> None:
         n = i // bit_batch + 1
         lessons.append(
             {
-                "title": f"Bit manipulation — practice set {n}",
+                "title": f"Bit manipulation - practice set {n}",
                 "content": "\n".join(parts),
             }
         )
 
     lines_out = [
         "/**",
-        " * Embedded interview preparation (Q&A) — generated by scripts/build_embedded_interview_lessons.py",
+        " * Embedded interview preparation (Q&A) - generated by scripts/build_embedded_interview_lessons.py",
         " */",
         "",
         "window.embeddedInterviewLessons = [",
@@ -556,7 +556,7 @@ def main() -> None:
     OUT_JS.parent.mkdir(parents=True, exist_ok=True)
     OUT_JS.write_text("\n".join(lines_out), encoding="utf-8")
     print(
-        f"Wrote {OUT_JS} — {len(lessons)} lessons, "
+        f"Wrote {OUT_JS} - {len(lessons)} lessons, "
         f"interview={len(interview)}, C items={len(c_combined)}, bit items={len(bit_qa)}"
     )
     if bit_qa:

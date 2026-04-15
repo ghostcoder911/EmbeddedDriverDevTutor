@@ -12,7 +12,7 @@ FreeRTOS examples for **Arduino**, **STM32F4**, and other **Cortex-M** boards, p
 
 ## Documentation
 
-Use [FreeRTOS.org](https://www.freertos.org/) for API references—especially [kernel configuration](https://www.freertos.org/a00110.html) and the [task](https://www.freertos.org/a00019.html), [queue](https://www.freertos.org/a00018.html), and [semaphore](https://www.freertos.org/a00024.html) sections.
+Use [FreeRTOS.org](https://www.freertos.org/) for API references - especially [kernel configuration](https://www.freertos.org/a00110.html) and the [task](https://www.freertos.org/a00019.html), [queue](https://www.freertos.org/a00018.html), and [semaphore](https://www.freertos.org/a00024.html) sections.
 
 ## Web app
 

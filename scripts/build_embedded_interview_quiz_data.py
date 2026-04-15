@@ -98,7 +98,7 @@ def main() -> None:
         encoding="utf-8",
     )
     counts = ", ".join(f"{k}={len(v)}" for k, v in by_cat.items())
-    print(f"Wrote {OUT} — {len(rows)} rows merged, per category: {counts}")
+    print(f"Wrote {OUT} - {len(rows)} rows merged, per category: {counts}")
 
 
 if __name__ == "__main__":

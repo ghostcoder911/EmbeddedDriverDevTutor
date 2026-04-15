@@ -1,6 +1,6 @@
 # STM32 Driver Mentor Tool
 
-An interactive web-based learning tool for **STM32 peripheral drivers** and **FreeRTOS**—step-by-step lessons and long-form study guides.
+An interactive web-based learning tool for **STM32 peripheral drivers** and **FreeRTOS** - step-by-step lessons and long-form study guides.
 
 ## 🎯 Purpose
 
@@ -109,7 +109,7 @@ python -m http.server 8000
 1. What is an RTOS?
 2. Tasks (building blocks)
 3. Task handle (`TaskHandle_t`)
-4. `xTaskCreate` — every parameter explained
+4. `xTaskCreate` - every parameter explained
 5. Static task creation (`xTaskCreateStatic`)
 6. Starting the scheduler and idle task
 7. Ticks, time, and delays
@@ -128,16 +128,16 @@ Lessons link to **[FreeRTOS.org](https://www.freertos.org/)** (kernel book, API 
 
 #### Embedded Interview Prep (generated; ~32 steps)
 1. How to use this track  
-2–11. Embedded concepts — questions in groups of 10 (1–100)  
-12+. C programming — practice sets (grouped Q&A)  
-Last steps: **Bit manipulation** — practice sets from `Bit manipulation _260405_011137.pdf` (index + curated answers). Regenerate with `python3 scripts/build_embedded_interview_lessons.py`.
+2–11. Embedded concepts - questions in groups of 10 (1–100)  
+12+. C programming - practice sets (grouped Q&A)  
+Last steps: **Bit manipulation** - practice sets from `Bit manipulation _260405_011137.pdf` (index + curated answers). Regenerate with `python3 scripts/build_embedded_interview_lessons.py`.
 
 ### Study Guides
 Open **Study Guides** in the app (or the bundled Markdown references) for long-form material:
-- **GPIO Interrupt Configuration** — GPIO interrupts end-to-end (hardware chain, registers, examples, pitfalls)
-- **RTOS & FreeRTOS** — Theory plus FreeRTOS practice; **[freertos.org](https://www.freertos.org/)** API links in the guide header
-- **FreeRTOS Simulator** — Run FreeRTOS on a PC without hardware
-- **Bit manipulation in C** — `guides/Bit_Manipulation_C_Study_Guide.md` (41 Q&A aligned with the Bit manipulation PDF index)
+- **GPIO Interrupt Configuration** - GPIO interrupts end-to-end (hardware chain, registers, examples, pitfalls)
+- **RTOS & FreeRTOS** - Theory plus FreeRTOS practice; **[freertos.org](https://www.freertos.org/)** API links in the guide header
+- **FreeRTOS Simulator** - Run FreeRTOS on a PC without hardware
+- **Bit manipulation in C** - `guides/Bit_Manipulation_C_Study_Guide.md` (41 Q&A aligned with the Bit manipulation PDF index)
 
 ### Quick Reference
 - Register maps for all peripherals

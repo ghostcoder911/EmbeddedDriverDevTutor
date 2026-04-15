@@ -256,7 +256,7 @@ class DriverMentor {
                         <p>This uses the same <strong>8 embedded interview questions</strong> as the
                         <strong>InterviewPreperationAgent</strong> desktop app, in <strong>text only</strong> (no microphone or TTS).</p>
                         <p>Type each answer, submit for an instant <strong>score (0–10)</strong> and <strong>keyword-based feedback</strong>.
-                        This is a practice aid—not a human interviewer.</p>
+                        This is a practice aid - not a human interviewer.</p>
                     </div>
                     <button type="button" class="btn-mock-primary" id="mock-start-btn">Start interview</button>
                 </div>`;
@@ -271,7 +271,7 @@ class DriverMentor {
             document.getElementById('current-step-num').textContent = 'Summary';
             document.getElementById('total-steps').textContent = `${total} questions`;
             const scores = this.mockEvalResults.map((r) => r.score);
-            const avg = scores.length ? (scores.reduce((a, b) => a + b, 0) / scores.length).toFixed(1) : '—';
+            const avg = scores.length ? (scores.reduce((a, b) => a + b, 0) / scores.length).toFixed(1) : ' - ';
             let rows = '';
             for (let i = 0; i < scores.length; i++) {
                 rows += `<tr><td>Q${i + 1}</td><td>${scores[i]} / 10</td></tr>`;
@@ -683,12 +683,12 @@ class DriverMentor {
         let message;
         if (style === 'interview-mcq') {
             subtitleHtml = `You've completed <span class="driver-name">${display}</span>!`;
-            badgeName = 'MCQ sets — cleared';
+            badgeName = 'MCQ sets - cleared';
             message =
                 'You finished all three quiz topics (bit manipulation, embedded C, embedded systems). Open any step again from the sidebar to retake a quiz and improve your score.';
         } else if (style === 'mock-interview') {
             subtitleHtml = `You've finished the <span class="driver-name">${display}</span> session!`;
-            badgeName = 'Mock interview — completed';
+            badgeName = 'Mock interview - completed';
             message =
                 'You worked through all eight embedded questions with text answers and feedback. Practice explaining answers aloud and compare with senior engineers when you can.';
         } else if (style === 'track') {
@@ -697,7 +697,7 @@ class DriverMentor {
             message = 'You can apply scheduling, synchronization, and ISR-safe patterns in firmware. Keep the official FreeRTOS.org API reference open while coding.';
         } else if (style === 'interview') {
             subtitleHtml = `You've completed <span class="driver-name">${display}</span>!`;
-            badgeName = `${display} — Reviewed`;
+            badgeName = `${display} - Reviewed`;
             message = 'You have worked through the full Q&A set. Practice explaining answers out loud and connect each topic to projects you have built.';
         } else if (style === 'topic') {
             subtitleHtml = `You've mastered <span class="driver-name">${display}</span>!`;

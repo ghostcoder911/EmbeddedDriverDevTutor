@@ -159,7 +159,7 @@ FreeRTOS tasks run as Windows threads underneath!
 
 # Project Structure
 
-Let's understand a typical layout (names vary by download—focus on the roles of each part):
+Let's understand a typical layout (names vary by download - focus on the roles of each part):
 
 ```
 simulator_project/

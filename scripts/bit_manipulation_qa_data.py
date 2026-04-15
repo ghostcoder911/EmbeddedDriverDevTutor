@@ -1,5 +1,5 @@
 """Curated interview-style answers for questions indexed in Bit manipulation PDF (page 1).
-Used by build_embedded_interview_lessons.py — keep keys 1..41 in sync with the PDF index."""
+Used by build_embedded_interview_lessons.py - keep keys 1..41 in sync with the PDF index."""
 
 from __future__ import annotations
 
@@ -13,7 +13,7 @@ BIT_ANSWERS: dict[int, str] = {
         "Set bit i: `x | (1u << i)`. Often written as `x |= (1u << i);` for GPIO BSRR or flag registers."
     ),
     3: (
-        "Clear bit i: `x & ~(1u << i)` or `x &= ~(1u << i);`. The mask must be wide enough—use `1UL` on 32-bit if needed."
+        "Clear bit i: `x & ~(1u << i)` or `x &= ~(1u << i);`. The mask must be wide enough - use `1UL` on 32-bit if needed."
     ),
     4: (
         "Lowest set bit: `x & -x` isolates it. Remove lowest set bit (Brian Kernighan): `x & (x - 1)`. "
@@ -63,10 +63,10 @@ BIT_ANSWERS: dict[int, str] = {
         "For A–Z: `c - 'A' + 1`; for a–z: `c - 'a' + 1`. Normalize with `tolower`/`toupper` first if input mixed."
     ),
     17: (
-        "All others appear even times: XOR entire array—pairs cancel (`x^x=0`), odd one remains. O(n), O(1) space."
+        "All others appear even times: XOR entire array - pairs cancel (`x^x=0`), odd one remains. O(n), O(1) space."
     ),
     18: (
-        "XOR swap (same memory address is undefined—do not use `a` and `a`): "
+        "XOR swap (same memory address is undefined - do not use `a` and `a`): "
         "`a ^= b; b ^= a; a ^= b;`. Prefer a temp for clarity unless constrained in a puzzle."
     ),
     19: (
@@ -83,10 +83,10 @@ BIT_ANSWERS: dict[int, str] = {
         "If n==1, result is `a[0]`."
     ),
     23: (
-        "Bits that differ: `A ^ B`. Count set bits in that: `__builtin_popcount(A ^ B)` or Kernighan loop—equals Hamming distance."
+        "Bits that differ: `A ^ B`. Count set bits in that: `__builtin_popcount(A ^ B)` or Kernighan loop - equals Hamming distance."
     ),
     24: (
-        "Missing one of 1..n in permuted array: XOR all indices+1 with all values, or sum formula `n(n+1)/2` minus array sum (watch overflow—prefer XOR)."
+        "Missing one of 1..n in permuted array: XOR all indices+1 with all values, or sum formula `n(n+1)/2` minus array sum (watch overflow - prefer XOR)."
     ),
     25: (
         "For 32-bit: `for (int i = 31; i >= 0; i--) putchar('0' + ((x >> i) & 1));` or print from LSB with a flag for leading zeros."
@@ -112,10 +112,10 @@ BIT_ANSWERS: dict[int, str] = {
     ),
     31: (
         "Every number appears three times except one: sum bits per position mod 3, or finite-state per bit; "
-        "LeetCode-style—O(32) space for 32-bit integers. XOR alone does not work as with ‘twice’."
+        "LeetCode-style - O(32) space for 32-bit integers. XOR alone does not work as with ‘twice’."
     ),
     32: (
-        "Often interpreted as minimum steps to reduce n to 1 with allowed ops (even: /2, odd: +1 or -1)—greedy with bit patterns, or BFS for small n. "
+        "Often interpreted as minimum steps to reduce n to 1 with allowed ops (even: /2, odd: +1 or -1) - greedy with bit patterns, or BFS for small n. "
         "Clarify problem statement in interview."
     ),
     33: (
@@ -129,10 +129,10 @@ BIT_ANSWERS: dict[int, str] = {
         "Boolean algebra: `a ^ b` equals `(a & ~b) | (~a & b)` without using `^` operator."
     ),
     36: (
-        "For integers: `!(a ^ b)` is 1 if equal (also `((a ^ b) | -(a ^ b)) >> 31` patterns—avoid for floats)."
+        "For integers: `!(a ^ b)` is 1 if equal (also `((a ^ b) | -(a ^ b)) >> 31` patterns - avoid for floats)."
     ),
     37: (
-        "Branchless min of a,b: `b ^ ((a ^ b) & -(a < b))` (with `a<b` as 0/1—still a comparison). "
+        "Branchless min of a,b: `b ^ ((a ^ b) & -(a < b))` (with `a<b` as 0/1 - still a comparison). "
         "Or use `a < b ? a : b` in real code."
     ),
     38: (
@@ -143,10 +143,10 @@ BIT_ANSWERS: dict[int, str] = {
         "Bitmask each word’s letter set; for each pair, if `mask[i] & mask[j] == 0`, update max `len[i]*len[j]`. O(n² * 26) with early skips."
     ),
     40: (
-        "Rolling hash on binary string of length k over sliding window; track seen in hash set; need 2^k distinct substrings—use deque on large inputs."
+        "Rolling hash on binary string of length k over sliding window; track seen in hash set; need 2^k distinct substrings - use deque on large inputs."
     ),
     41: (
-        "Classic: array values 1..n with one duplicate—Floyd cycle on index chain `i -> a[i]`, or XOR/sum math. "
+        "Classic: array values 1..n with one duplicate - Floyd cycle on index chain `i -> a[i]`, or XOR/sum math. "
         "LeetCode 287: treat as linked list cycle."
     ),
 }

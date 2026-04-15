@@ -1,4 +1,4 @@
-# Bit manipulation in C — study guide
+# Bit manipulation in C - study guide
 
 This guide matches the numbered index in `Bit manipulation _260405_011137.pdf` (see the PDF’s index page). Suggested answers are concise interview notes; verify edge cases (sign, width, overflow) on your target.
 
@@ -14,7 +14,7 @@ Set bit i: `x | (1u << i)`. Often written as `x |= (1u << i);` for GPIO BSRR or 
 
 ## 3. clear the ith bit of a number?
 
-Clear bit i: `x & ~(1u << i)` or `x &= ~(1u << i);`. The mask must be wide enough—use `1UL` on 32-bit if needed.
+Clear bit i: `x & ~(1u << i)` or `x &= ~(1u << i);`. The mask must be wide enough - use `1UL` on 32-bit if needed.
 
 ## 4. Remove the last set bit of a number?
 
@@ -70,11 +70,11 @@ For A–Z: `c - 'A' + 1`; for a–z: `c - 'a' + 1`. Normalize with `tolower`/`to
 
 ## 17. Given a set of numbers where all elements occur an even number of times except one number, ﬁnd the odd occurring number?
 
-All others appear even times: XOR entire array—pairs cancel (`x^x=0`), odd one remains. O(n), O(1) space.
+All others appear even times: XOR entire array - pairs cancel (`x^x=0`), odd one remains. O(n), O(1) space.
 
 ## 18. Swap two numbers using Bit manipulation?
 
-XOR swap (same memory address is undefined—do not use `a` and `a`): `a ^= b; b ^= a; a ^= b;`. Prefer a temp for clarity unless constrained in a puzzle.
+XOR swap (same memory address is undefined - do not use `a` and `a`): `a ^= b; b ^= a; a ^= b;`. Prefer a temp for clarity unless constrained in a puzzle.
 
 ## 19. Calculate XOR from 1 to n?
 
@@ -94,11 +94,11 @@ Each element appears in exactly half of all subsets (2^(n-1) times). If n≥2, e
 
 ## 23. Count Number of bits to be ﬂipped to convert A to B?
 
-Bits that differ: `A ^ B`. Count set bits in that: `__builtin_popcount(A ^ B)` or Kernighan loop—equals Hamming distance.
+Bits that differ: `A ^ B`. Count set bits in that: `__builtin_popcount(A ^ B)` or Kernighan loop - equals Hamming distance.
 
 ## 24. Find missing number in an array?
 
-Missing one of 1..n in permuted array: XOR all indices+1 with all values, or sum formula `n(n+1)/2` minus array sum (watch overflow—prefer XOR).
+Missing one of 1..n in permuted array: XOR all indices+1 with all values, or sum formula `n(n+1)/2` minus array sum (watch overflow - prefer XOR).
 
 ## 25. Print the binary representation of decimal number?
 
@@ -126,11 +126,11 @@ Unsigned long division style: subtract `b` shifted left while `a >= b<<k`, accum
 
 ## 31. One unique rest thrice?
 
-Every number appears three times except one: sum bits per position mod 3, or finite-state per bit; LeetCode-style—O(32) space for 32-bit integers. XOR alone does not work as with ‘twice’.
+Every number appears three times except one: sum bits per position mod 3, or finite-state per bit; LeetCode-style - O(32) space for 32-bit integers. XOR alone does not work as with ‘twice’.
 
 ## 32. Reduce a Number to 1?
 
-Often interpreted as minimum steps to reduce n to 1 with allowed ops (even: /2, odd: +1 or -1)—greedy with bit patterns, or BFS for small n. Clarify problem statement in interview.
+Often interpreted as minimum steps to reduce n to 1 with allowed ops (even: /2, odd: +1 or -1) - greedy with bit patterns, or BFS for small n. Clarify problem statement in interview.
 
 ## 33. Detect if two integers have opposite sign?
 
@@ -146,11 +146,11 @@ Boolean algebra: `a ^ b` equals `(a & ~b) | (~a & b)` without using `^` operator
 
 ## 36. Determine if two integers are equal without using comparison and arithmetic operators?
 
-For integers: `!(a ^ b)` is 1 if equal (also `((a ^ b) | -(a ^ b)) >> 31` patterns—avoid for floats).
+For integers: `!(a ^ b)` is 1 if equal (also `((a ^ b) | -(a ^ b)) >> 31` patterns - avoid for floats).
 
 ## 37. Find minimum or maximum of two integers without using branching?
 
-Branchless min of a,b: `b ^ ((a ^ b) & -(a < b))` (with `a<b` as 0/1—still a comparison). Or use `a < b ? a : b` in real code.
+Branchless min of a,b: `b ^ ((a ^ b) & -(a < b))` (with `a<b` as 0/1 - still a comparison). Or use `a < b ? a : b` in real code.
 
 ## 38. Find missing and repeating number / Set mismatch?
 
@@ -162,8 +162,8 @@ Bitmask each word’s letter set; for each pair, if `mask[i] & mask[j] == 0`, up
 
 ## 40. Check if a String Contains all binary codes of size k?
 
-Rolling hash on binary string of length k over sliding window; track seen in hash set; need 2^k distinct substrings—use deque on large inputs.
+Rolling hash on binary string of length k over sliding window; track seen in hash set; need 2^k distinct substrings - use deque on large inputs.
 
 ## 41. Find the Duplicate Number?
 
-Classic: array values 1..n with one duplicate—Floyd cycle on index chain `i -> a[i]`, or XOR/sum math. LeetCode 287: treat as linked list cycle.
+Classic: array values 1..n with one duplicate - Floyd cycle on index chain `i -> a[i]`, or XOR/sum math. LeetCode 287: treat as linked list cycle.

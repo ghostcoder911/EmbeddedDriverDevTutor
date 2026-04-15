@@ -595,7 +595,7 @@ body::before {
     color: var(--text-secondary);
 }
 
-/* Mock interview (text) — InterviewPreperationAgent question bank */
+/* Mock interview (text) - InterviewPreperationAgent question bank */
 .lesson-navigation.lesson-nav-hidden {
     display: none;
 }

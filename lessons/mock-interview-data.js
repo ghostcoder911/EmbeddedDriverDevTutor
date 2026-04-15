@@ -1,12 +1,12 @@
 /**
- * Text-based embedded mock interview — question bank from InterviewPreperationAgent (interview_agent.py).
+ * Text-based embedded mock interview - question bank from InterviewPreperationAgent (interview_agent.py).
  * Evaluation is heuristic (keywords + length); not a substitute for a human interviewer.
  */
 (function () {
     const questions = [
         {
             text:
-                'Hello — thanks for joining. In one minute, what kind of embedded work do you focus on, and what is your current toolchain?',
+                'Hello - thanks for joining. In one minute, what kind of embedded work do you focus on, and what is your current toolchain?',
             keywords: [
                 'embedded',
                 'mcu',
@@ -125,7 +125,7 @@
         },
         {
             text:
-                'How do you approach power management when the product must wake on a button or RTC — what do you verify in software?',
+                'How do you approach power management when the product must wake on a button or RTC - what do you verify in software?',
             keywords: [
                 'wake',
                 'sleep',
@@ -144,7 +144,7 @@
         },
         {
             text:
-                'Last question: what would you improve in our interview process or in how embedded teams collaborate with hardware? Thank you — that concludes the mock interview.',
+                'Last question: what would you improve in our interview process or in how embedded teams collaborate with hardware? Thank you - that concludes the mock interview.',
             keywords: [
                 'collaboration',
                 'schematic',
@@ -200,7 +200,7 @@
             feedback.push('Consider also mentioning: ' + missing.slice(0, 5).join(', ') + (missing.length > 5 ? '…' : '') + '.');
         }
         if (wc < q.minWords * 0.5) {
-            feedback.push('Answer is quite short for this question — aim for at least ~' + q.minWords + ' words with concrete examples.');
+            feedback.push('Answer is quite short for this question - aim for at least ~' + q.minWords + ' words with concrete examples.');
         } else if (wc >= q.minWords) {
             feedback.push('Good length for a spoken-style answer.');
         }
